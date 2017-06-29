@@ -87,12 +87,30 @@ a:hover {
     color: #282828;
   }
   padding-bottom: 10px;
-  
+
 }
 
 .list-item:hover {
   .panel-default {
       background-color: #f4f4f4;
   }
+}
+// ====================
+.sign-up-container {
 
+  text-align: center;
+  border-radius: 5px;
+  margin: 100px auto;
+  display:block;
+  background-color: white;
+  padding: 10px 30px;
+  width: 30%;
+  h2 {
+    text-decoration: underline;
+    margin-bottom: 20px;
+  }
+}
+
+.sign-up-content {
+  text-align: center;
 }

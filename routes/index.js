@@ -10,4 +10,8 @@ router.get('/recipes', (req, res, next) => {
   res.render('recipes');
 });
 
+router.get('/sign-up', (req, res, next) => {
+  res.render('sign-up');
+});
+
 module.exports = router;

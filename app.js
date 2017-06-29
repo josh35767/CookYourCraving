@@ -5,6 +5,9 @@ const logger       = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser   = require('body-parser');
 const layouts      = require('express-ejs-layouts');
+const mongoose = require('mongoose');
+
+mongoose.connect("mongodb://localhost/recipe-db");
 
 
 const app = express();
