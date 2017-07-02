@@ -1,0 +1,42 @@
+<div class='sign-up-content'>
+
+  <div class='sign-up-header sign-up-container'>
+    <h2> Log-in </h2>
+  </div>
+
+  <div class='sign-up-container sign-up-form'>
+    <% if (typeof errorMessage === 'string') { %>
+    <div class="alert alert-danger" role="alert">
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      <span class="sr-only">Error:</span>
+        <%= errorMessage %>
+    </div>
+    <% } %>
+    <form action="/login" method="post" class="form-horizontal">
+      <div class="form-group">
+        <input type="text" class="form-control" name="loginUsername" placeholder="Username">
+      </div>
+
+      <div class="form-group">
+        <input type="password" name="loginPassword" placeholder="Password" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <a href="/auth/facebook" class="loginBtn loginBtn--facebook">
+          Login with Facebook
+        </a>
+
+        <a href="/auth/google" class="loginBtn loginBtn--google">
+          Login with Google
+        </a>
+      </div>
+
+      <div class="form-group">
+        <button class="btn btn-default btn-lg"> Login! </button>
+      </div>
+    </form>
+
+
+  </div>
+
+</div>

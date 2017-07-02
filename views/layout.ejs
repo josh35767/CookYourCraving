@@ -8,7 +8,8 @@
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display" rel="stylesheet">
     <link rel="stylesheet" href="/stylesheets/style.min.css">
   </head>
-  <body>
+  <body class="<%= bodyclass %>">
+
     <nav class="navbar navbar-default">
       <div class="container-fluid">
 
@@ -22,12 +23,16 @@
         </div>
 
         <div class="collapse navbar-collapse navbar-right" id="myNavbar">
-          <ul class="nav navbar-nav">
+          <ul class="nav navbar-nav nav-tabs">
             <li><a href="/"> Home </a></li>
             <li><a href="/recipes"> Recipes </a></li>
-            <li><a href="#"> Profile </a></li>
-            <li><a href="#"> Log In </a></li>
-            <li><a href="/sign-up"> Sign Up </a></li>
+            <% if (typeof user === 'object') { %>
+              <li><a href="/profile"> Profile </a></li>
+              <li><a href="/logout"> Log Out </a>
+            <% } else { %>
+              <li><a href="/login"> Log In </a></li>
+              <li><a href="/sign-up"> Sign Up </a></li>
+            <% } %>
           </ul>
         </div>
 
@@ -38,6 +43,6 @@
     <script type="text/javascript" src="javascripts/bootstrap.min.js"></script>
     <script type="text/javascript" src="javascripts/front.js"></script>
 
-    </script>
+    
   </body>
 </html>

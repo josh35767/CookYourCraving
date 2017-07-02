@@ -3,9 +3,9 @@
   <div class="container background-list">
     <h2>Select an Ethnicity</h2>
       <% foodCategories.forEach((someFood) => { %>
-        <a href="#0" class="list-item">
+        <a href="/recipes/<%=someFood%>" class="list-item">   
           <div class="panel panel-default list-panel">
-            <h4><%=someFood%>-(24)</h4>
+            <h4><%=someFood%></h4>
           </div>
         </a>
       <%});%>

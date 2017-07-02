@@ -1,0 +1,18 @@
+<div class="container background-list">
+  <h2> <%= recipeDetails.title %> </h2>
+  <p> <b>Cooking Time:</b> <%= recipeDetails.cookingTime %></p>
+  <p> <b>Serves:</b> <%= recipeDetails.serves %></p>
+  <p> <b>Ingredients:</b></p>
+    <ul>
+      <% recipeDetails.ingredients.forEach((oneIngredient) => { %>
+        <li> <%= oneIngredient %> </li>
+      <% }) %>
+    </ul>
+  <p> <b>Recipe:</b> </p>
+    <ol>
+      <% recipeDetails.recipe.forEach((oneStep) => { %>
+        <li> <%= oneStep %> </li>
+      <% }) %>
+    </ol>
+  <p> <b>Ethnicty:</b> <%= recipeDetails.ethnicty %> </p>
+</div>

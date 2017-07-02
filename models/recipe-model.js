@@ -12,15 +12,18 @@ const recipeSchema = new Schema ({
     type: Number
   },
   ingredients: {
-    type: String
+    type: [String]
   },
   recipe: {
-    type: String
+    type: [String]
   },
   ethnicty: {
     type: String,
-    enum: ["Cajun", "Chinese", "French", "Greek", "Indian", "Italian", "Japanese", "Thai", "Korean", "American", "Spanish/Latin American", "English", "German"]
-  }
+    enum: ["Cajun", "Chinese", "French", "Greek", "Indian", "Italian", "Japanese", "Thai", "Korean", "American", "Spanish", "Mexican", "Latin-American", "English", "German"]
+  },
+  author: { type: Schema.Types.ObjectId}
 });
 
-module.exports = recipeModel;
+const RecipeModel = mongoose.model('Recipe', recipeSchema);
+
+module.exports = RecipeModel;

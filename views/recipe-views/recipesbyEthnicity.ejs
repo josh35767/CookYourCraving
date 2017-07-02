@@ -1,0 +1,27 @@
+<div class="container background-list">
+  <h2> <%= recipeEthnicty %> Cuisine </h2>
+
+      <% if (recipeArray.length === 0) { %>
+        <h2> Sorry, no recipes in this category! </h2>
+      <% } else { %>
+          <div class='row ethnicty-row'>
+
+        <% recipeArray.forEach((oneRecipe) => { %>
+
+          <div class='col-md-3'>
+          <div class='columnspacing foodsnippet'>
+            <h3> <%= oneRecipe.title %> </h3>
+            <div class='placeholder'></div>
+            <h4> Cooking Time: <%= oneRecipe.cookingTime %> mins </h4>
+            <h4> Serves: <%= oneRecipe.serves %> </h4>
+            <a href='/recipes/<%= recipeEthnicty %>/<%= oneRecipe._id %>'> View This Recipe </a>
+          </div>
+          </div>
+
+        <% }); %>
+
+        </div>
+      <%}%>
+
+
+</div>
