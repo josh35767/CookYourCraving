@@ -9,7 +9,7 @@ const RecipeArray = [
     serves: 4,
     ingredients: ["Cheese", "Sauce", "Crust"],
     recipe: ["Cook Pizza."],
-    ethnicty: "Italian"
+    ethnicity: "Italian"
   },
   {
     title: "Spaghetti",
@@ -17,7 +17,7 @@ const RecipeArray = [
     serves: 2,
     ingredients: [ "Sauce", "Noodles"],
     recipe: ["Cook Noodles", "Cook Sauce", "Mix"],
-    ethnicty: "Italian"
+    ethnicity: "Italian"
   },
   {
     title: "General Tso's",
@@ -25,7 +25,7 @@ const RecipeArray = [
     serves: 1,
     ingredients: ["Chicken", "Soy Sauce", "Rice"],
     recipe: ["Sautee the Chicken", "Toss in Sauce", "Cook Rice"],
-    ethnicty: "Chinese"
+    ethnicity: "Chinese"
   },
   {
     title: "Curry",
@@ -33,7 +33,7 @@ const RecipeArray = [
     serves: 4,
     ingredients: ["Curry", "Chicken", "Rice"],
     recipe: ["Cook Curry.", "Add Chicken"],
-    ethnicty: "Indian"
+    ethnicity: "Indian"
   }
 ];
 

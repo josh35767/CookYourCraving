@@ -1,3 +1,70 @@
-<div class="container background-list">
- <a href="/recipes/new"> + Add a new recipe </a>
+<div class="container background-list profile-page">
+  <div class="row">
+
+    <div class="col-sm-4 col-md-3">
+      <div class="profile-info">
+        <h2> <%= userDetails.displayName %> </h2>
+        <% if(isOwnProfile) { %>
+          <a href="/displayname"> Change Display Name </a>
+        <% } %>
+        <img src="<%=userDetails.photoURL%>" class="profile-picture">
+        <% if(isOwnProfile) { %>
+            <form action="/profile-picture" method="post" enctype="multipart/form-data">
+              <label for="">Upload Profile Picture</label>
+                <input type="file" name="profilePicture" id="profileFile"> </input>
+              <button class='btn btn-default' id="upload-btn"> Upload </button>
+            </form>
+        <% } %>
+      </div>
+    </div>
+
+    <div class="col-sm-8 col-md-9">
+
+      <div class="profile-recipes">
+        <% if (isOwnProfile) { %>
+          <h2> My Recipes </h2>
+          <a href="/recipes/new"> + Add a new recipe </a>
+        <% } else { %>
+          <h2> Their Recipes </h2>
+        <% } %>
+
+        <div class="dropdown">
+          <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            Recipe Ethnicities
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <% if(ethnicityList.length === 0) { %>
+              <li> Sorry, this user has no recipes. </li>
+            <% } %>
+
+            <% ethnicityList.forEach((oneEthnicity) => { %>
+              <li><a href='/profile/recipes/<%=userDetails._id%>/<%= oneEthnicity%>'><%= oneEthnicity %></a></li>
+            <% }) %>
+          </ul>
+        </div>
+
+
+        <h2> Bookmarked Recipes </h2>
+        <div class="dropdown">
+          <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            Recipe Ethnicities
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <% if(bookMarkedList.length === 0) { %>
+              <li> This user has no bookmarked recipes. </li>
+            <% } %>
+
+            <%bookMarkedList.forEach((oneEthnicity) => { %>
+              <li><a href='/profile/bookmarked/<%=userDetails._id%>/<%= oneEthnicity%>'><%= oneEthnicity %></a></li>
+            <% }) %>
+          </ul>
+        </div>
+
+
+      </div>
+    </div>
+
+  </div>
 </div>

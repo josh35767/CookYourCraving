@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
     <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
     <link rel="stylesheet" href="/stylesheets/style.min.css">
   </head>
   <body class="<%= bodyclass %>">
@@ -23,11 +24,11 @@
         </div>
 
         <div class="collapse navbar-collapse navbar-right" id="myNavbar">
-          <ul class="nav navbar-nav nav-tabs">
+          <ul class="nav navbar-nav navbar-default">
             <li><a href="/"> Home </a></li>
             <li><a href="/recipes"> Recipes </a></li>
-            <% if (typeof user === 'object') { %>
-              <li><a href="/profile"> Profile </a></li>
+            <% if (isUserLogged) { %>
+              <li><a href="/profile/<%= user._id %>"> Profile </a></li>
               <li><a href="/logout"> Log Out </a>
             <% } else { %>
               <li><a href="/login"> Log In </a></li>
@@ -39,10 +40,10 @@
       </div>
     </nav>
     <%- body %>
-    <script type="text/javascript" src="javascripts/jquery.js"></script>
-    <script type="text/javascript" src="javascripts/bootstrap.min.js"></script>
-    <script type="text/javascript" src="javascripts/front.js"></script>
+    <script type="text/javascript" src="/javascripts/jquery.js"></script>
+    <script type="text/javascript" src="/javascripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/javascripts/front.js"></script>
 
-    
+
   </body>
 </html>

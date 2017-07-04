@@ -9,9 +9,13 @@ const mongoose = require('mongoose');
 const RecipeModel = require('./models/recipe-model.js');
 const session      = require('express-session');
 const passport     = require('passport');
+
+// Import the "dotenv package"
+require('dotenv').config();
+
 require('./config/passport-config.js');
 
-mongoose.connect("mongodb://localhost/recipe-db");
+mongoose.connect(process.env.MONGODB_URI);
 
 
 const app = express();
@@ -24,7 +28,7 @@ app.set('view engine', 'ejs');
 // default value for title local
 app.locals.title = 'Cooking your Cravings';
 app.locals.bodyclass = 'someClass';
-app.locals.foodCategories = RecipeModel.schema.path('ethnicty').enumValues;
+app.locals.foodCategories = RecipeModel.schema.path('ethnicity').enumValues;
 
 // uncomment after placing your favicon in /public
 // ------------------------------ Middlewares -------------------------
@@ -41,16 +45,17 @@ app.use(session({
   saveUninitialized: true
 })); // 2 parentheses: 1 for "app.use" and another for "session"
 // PASSPORT middlewars MUST GO AFTER SESSION MIDDLEWARE---------------
+
 app.use(passport.initialize());
 app.use(passport.session());
 // --------------------------------------------------------
 app.use((req, res, next) => {
-  if (req.user) {
-    res.locals.user = req.user;
-  }
+  res.locals.user = req.user || {};
+  res.locals.isUserLogged = Boolean(req.user);
 
   next();
 });
+
 
 
 // ------------------- ROUTES --------------------

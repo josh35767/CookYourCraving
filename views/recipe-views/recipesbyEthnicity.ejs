@@ -1,21 +1,21 @@
-<div class="container background-list">
-  <h2> <%= recipeEthnicty %> Cuisine </h2>
+<div class="container background-list recipe-list">
+  <h2> <%= userTitle %></h2>
 
       <% if (recipeArray.length === 0) { %>
         <h2> Sorry, no recipes in this category! </h2>
       <% } else { %>
-          <div class='row ethnicty-row'>
+          <div class='row ethnicity-row'>
 
         <% recipeArray.forEach((oneRecipe) => { %>
 
-          <div class='col-md-3'>
-          <div class='columnspacing foodsnippet'>
-            <h3> <%= oneRecipe.title %> </h3>
-            <div class='placeholder'></div>
-            <h4> Cooking Time: <%= oneRecipe.cookingTime %> mins </h4>
-            <h4> Serves: <%= oneRecipe.serves %> </h4>
-            <a href='/recipes/<%= recipeEthnicty %>/<%= oneRecipe._id %>'> View This Recipe </a>
-          </div>
+          <div class='col-sm-6 col-md-4 col-lg-3'>
+            <div class='columnspacing foodsnippet'>
+              <img src="<%= oneRecipe.photoURL %>" class='placeholder'></img>
+              <h3> <%= oneRecipe.title %> </h3>
+              <h4> Date Created: <%= oneRecipe.createdAt.toDateString() %> </h4>
+              <h4> Serves: <%= oneRecipe.serves %> </h4>
+              <a href='/recipes/<%= recipeEthnicity %>/<%= oneRecipe._id %>'> View This Recipe </a>
+            </div>
           </div>
 
         <% }); %>

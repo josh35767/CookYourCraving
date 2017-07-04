@@ -1,3 +1,5 @@
+$shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
 html, body {
   height: 100%;
 }
@@ -5,6 +7,14 @@ html, body {
   background-color: #91d6ba;
   border-color: #91d6ba;
   color: #282828;
+}
+
+.navbar-default .navbar-toggle {
+  border-color: #7accaa;
+}
+
+.navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover {
+    background-color: #7accaa;
 }
 
 .navbar-default .navbar-brand, .navbar-default .navbar-nav>li>a {
@@ -17,19 +27,12 @@ html, body {
     border-color: #7accaa;
 }
 
-.nav-tabs>li>a:hover, .nav>li>a:focus, .nav>li>a:hover {
-    border-color: #7accaa;
-    background-color: #7accaa !important;
-}
-
-.nav-tabs{
-  border-color: #7accaa;
-}
 
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Playfair Display', serif;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
   color: #282828;
   background-color: #dddddd;
   font-size: 16px;
@@ -60,7 +63,7 @@ a:hover {
     /* bottom, image */
     url('../images/food-head.jpg');
   background-size: cover;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: $shadow;
   padding-bottom: 100px;
 }
 
@@ -71,6 +74,8 @@ a:hover {
 .front-header {
   color: #212121;
   border-bottom-color: #282828;
+  font-family: 'Rubik', sans-serif;
+
   small {
     color: #212121;
     font-size: 55%;
@@ -82,7 +87,7 @@ a:hover {
   text-align:  center;
   margin: 20px auto;
   border-radius: 5px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: $shadow;
   background-color: #eaeaea;
 }
 
@@ -125,6 +130,11 @@ a:hover {
       background-color: #f4f4f4;
   }
 }
+
+.add-new-link {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+}
 // ====================
 .sign-up-container {
 
@@ -136,7 +146,7 @@ a:hover {
   padding: 10px 30px;
   width: 100%;
   max-width: 500px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: $shadow;
   h2 {
     text-decoration: underline;
     margin-bottom: 20px;
@@ -250,16 +260,148 @@ a:hover {
 // ======================
 
 .foodsnippet {
-  padding: 1px 10px;
+  padding: 10px 0;
   border-radius: 5px;
   margin-bottom: 5px;
+  text-align: center;
   vertical-align: middle;
   height: 450px;
   background-color: white;
+  h3 {
+    margin-top: 5px;
+  }
   .placeholder {
     width: 90%;
+    max-width: 360px;
     margin: 0 auto;
-    background-color: red;
-    height: 250px;
+    height: 230px;
+  }
+}
+
+//==================== FORM for New Recipe
+.recipe-form-container {
+  margin: 20px auto;
+  padding: 0 50px 10px 50px;
+}
+
+.form-horizontal .input-padding {
+  margin-right: 10px !important;
+}
+
+
+.display-name-body {
+  background-image: url('../images/worldpic.jpeg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.ingredients-list li{
+  // display: inline-block;
+  // width: 45%;
+  list-style:circle;
+}
+
+.time-input {
+  .form-control {
+    width: 20%;
+    display: inline;
+    margin-left: 15px;
+  }
+  p {
+    display: inline;
+  }
+}
+//=====================
+.profile-picture {
+  width: 95%;
+  max-width: 350px;
+  height: 250px;
+  margin: 10px auto;
+  border: 2px solid black;
+}
+
+.profile-info {
+  h2 {
+    margin: 0;
+
+  }
+  a {
+    display: block;
+  }
+  text-align: center;
+  background-color: #f7f7f7;
+  padding: 10px;
+}
+
+.profile-recipes {
+  text-align: center;
+}
+
+.profile-page {
+  padding: 20px;
+}
+
+//======
+
+.dropdown {
+  button {
+    width: 100%;
+  }
+  .dropdown-menu {
+    width: 100%;
+  }
+}
+
+// ======
+
+.times {
+  display: inline-block;
+  margin-right: 50px;
+}
+
+.details {
+  margin: 20px auto 20px auto;
+  box-shadow: $shadow;
+  h2 {
+    text-decoration: underline;
+  }
+}
+
+.details img {
+  width: 80%;
+  border: 2px solid black;
+  box-shadow: $shadow;
+}
+
+.direction-list {
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  box-shadow: $shadow;
+}
+
+.col-content {
+  margin: 20px;
+}
+
+.details-body {
+  background: url('../images/recipe-bg.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+//===========
+.recipe-list {
+  margin: 20px auto;
+}
+
+@media (min-width: 500px) and (max-width: 780px) {
+  .col-sm-6 {
+    width: 49%;
+    float: left;
   }
 }

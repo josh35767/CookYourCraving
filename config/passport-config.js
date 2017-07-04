@@ -32,6 +32,7 @@ passport.deserializeUser((idFromBowl, next) =>{
 // SETUP passport-local
 const LocalStrategy = require('passport-local').Strategy;
 
+
 passport.use(new LocalStrategy (
   {                         //1st argument -> settings object
     usernameField: 'loginUsername',    // Must use these names for your form inputs
@@ -74,13 +75,14 @@ const FbStrategy = require('passport-facebook').Strategy;
 
 passport.use (new FbStrategy(
   {                  // 1st argument -> settings object
-    clientID: '',
-    clientSecret: '',
+    clientID: process.env.facebookClientId,
+    clientSecret: process.env.facebookClientSecret,
     callbackURL: '/auth/facebook/callback'
   },
 
   (accessToken, refreshToken, profile, next) => {         // 2nd argument -> callback  (will be called when a user allows us to log them in with facebook)
-
+    console.log( '----------------');
+    console.log(profile);
     UserModel.findOne(
       { facebookId: profile.id },
       (err, userFromDb) => {
@@ -97,7 +99,8 @@ passport.use (new FbStrategy(
         }
 
         const theUser = new UserModel ({
-          facebookId: profile.id
+          facebookId: profile.id,
+          displayName: profile.displayName
         });
 
         theUser.save((err) => {
@@ -121,13 +124,13 @@ const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 passport.use (new GoogleStrategy(
   {                  // 1st argument -> settings object
-    clientID: '',
-    clientSecret: '',
+    clientID: process.env.googleClientId,
+    clientSecret: process.env.googleClientSecret,
     callbackURL: '/auth/google/callback'
   },
 
   (accessToken, refreshToken, profile, next) => {         // 2nd argument -> callback  (will be called when a user allows us to log them in with facebook)
-    
+
     UserModel.findOne(
       { googleId: profile.id },
       (err, userFromDb) => {

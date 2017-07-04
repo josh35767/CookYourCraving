@@ -1,0 +1,80 @@
+<div class="container background-list recipe-form-container">
+
+  <h2> Edit <i> <%= recipeDetails.title %> </i> </h2>
+  <form action="/recipes/<%= recipeDetails.ethnicity %>/<%= recipeDetails._id %>/update" method="post" class="form-horizontal">
+    <div class="row">
+
+        <div class="col-sm-8">
+          <div class="form-group input-padding">
+            <label for="title-input"> Title for Recipe: </label>
+            <input type="text" class="form-control" name="recipeTitle" id="title-input" value="<%= recipeDetails.title %>" required>
+          </div>
+        </div>
+
+        <div class="col-sm-2">
+          <div class="form-group input-padding">
+            <label for="servings-input"> Serves: </label>
+            <input type="number" class="form-control" name="recipeServings" id="servings-input" value="<%= recipeDetails.serves %>">
+          </div>
+        </div>
+
+    </div>
+
+
+    <div class="row">
+
+      <div class="col-sm-6">
+        <div class="form-group input-padding time-input">
+          <label for="prep-time-input"> Prep Time: </label>
+          <input type="number" class="form-control" name="recipePrepTimeHours" id="prep-time-input" min="0"
+            value="<%= recipeDetails.prepTime.hours %>"> <p>Hours</p>
+          <input type="number" class="form-control" name="recipePrepTimeMinutes"
+            min="0" max="59" required value="<%= recipeDetails.prepTime.minutes %>">  <p>Minutes</p>
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+        <div class="form-group input-padding time-input">
+          <label for="cooking-time-input"> Cooking Time: </label>
+          <input type="number" class="form-control" name="recipeCookingTimeHours" min="0"
+            id="cooking-time-input" value="<%= recipeDetails.cookingTime.hours%>"> <p>Hours</p>
+          <input type="number" class="form-control" name="recipeCookingTimeMinutes"
+            min="0" max="59" required value="<%= recipeDetails.cookingTime.minutes %>">  <p>Minutes</p>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="form-group">
+      <label for="ethnicity-input"> Ethnicity: </label>
+      <select id="ethnicity-input" name="recipeEthnicity" required>
+        <% foodCategories.forEach((oneCategory) => { %>
+          <% if (recipeDetails.ethnicity === oneCategory) { %>
+            <option value="<%=oneCategory%>" selected="selected"> <%= oneCategory %> </option>
+            <% return; %>
+          <% } %>
+          <option value="<%=oneCategory%>"> <%= oneCategory %> </option>
+        <% }) %>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="ingredients-input"> Ingredients: </label>
+      <textarea name="recipeIngredients" class="form-control" rows="8" id="ingredients-input"
+        placeholder="Put each ingredient on it's own line. Include measurements if applicable."><%= recipeDetails.ingredients.join('\n') %></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="recipe-input"> Cooking Directions: </label>
+      <textarea name="recipeRecipe" rows="8" class="form-control" id="recipe-input"
+      placeholder="Add each step on it's own line."> <%= recipeDetails.recipe.join('\n') %></textarea>
+    </div>
+
+
+
+    <button class="btn btn-lg btn-default"> Save this Recipe </button>
+
+  </form>
+
+</div>

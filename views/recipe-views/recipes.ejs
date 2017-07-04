@@ -2,8 +2,11 @@
 
   <div class="container background-list">
     <h2>Select an Ethnicity</h2>
+    <% if(isUserLogged) { %>
+      <a href="/recipes/new" class="add-new-link"> + Add a new recipe </a>
+    <% } %>
       <% foodCategories.forEach((someFood) => { %>
-        <a href="/recipes/<%=someFood%>" class="list-item">   
+        <a href="/recipes/<%=someFood%>" class="list-item">
           <div class="panel panel-default list-panel">
             <h4><%=someFood%></h4>
           </div>

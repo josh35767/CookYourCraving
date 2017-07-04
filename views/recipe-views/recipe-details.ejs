@@ -1,18 +1,80 @@
-<div class="container background-list">
-  <h2> <%= recipeDetails.title %> </h2>
-  <p> <b>Cooking Time:</b> <%= recipeDetails.cookingTime %></p>
-  <p> <b>Serves:</b> <%= recipeDetails.serves %></p>
-  <p> <b>Ingredients:</b></p>
-    <ul>
-      <% recipeDetails.ingredients.forEach((oneIngredient) => { %>
-        <li> <%= oneIngredient %> </li>
-      <% }) %>
-    </ul>
-  <p> <b>Recipe:</b> </p>
-    <ol>
-      <% recipeDetails.recipe.forEach((oneStep) => { %>
-        <li> <%= oneStep %> </li>
-      <% }) %>
-    </ol>
-  <p> <b>Ethnicty:</b> <%= recipeDetails.ethnicty %> </p>
+<div class="container background-list details">
+
+  <div class="row">
+
+    <div class='col-sm-6'>
+      <div class='col-content'>
+
+          <h2> <%= recipeDetails.title %> </h2>
+          <% if (isUserLogged) { %>
+              <% if(!isBookMarked) { %>
+                  <form action="/recipes/<%= recipeDetails.ethnicity%>y/<%= recipeDetails._id%>/bookmark" method="post">
+                    <button class="btn btn-default"> Bookmark this Recipe </button>
+                  </form>
+              <% } else { %>
+                <form action="/recipes/<%= recipeDetails.ethnicity%>y/<%= recipeDetails._id%>/removeBookmark" method="post">
+                  <button class="btn btn-default"><span class="glyphicon glyphicon-bookmark"></span> Remove From Bookmarks </button>
+                </form>
+          <% }}%>
+          <div class="row">
+            <div class='col-xs-6'>
+
+              <p class="times"> <b>Cooking Time:</b>
+                <%if (recipeDetails.cookingTime.hours !== 0 && recipeDetails.cookingTime.hours !== null){ %>
+                  <%= recipeDetails.cookingTime.hours %> h
+                <% } %>
+                <%= recipeDetails.cookingTime.minutes %> mins
+              </p><br>
+
+              <p class="times"> <b>Serves:</b> <%= recipeDetails.serves %></p>
+
+            </div>
+
+            <p class="times"> <b>Prep Time:</b>
+              <%if (recipeDetails.prepTime.hours !== 0 && recipeDetails.prepTime.hours !== null){ %>
+                <%= recipeDetails.prepTime.hours %> h
+              <% } %>
+              <%= recipeDetails.prepTime.minutes %> mins
+            </p><br>
+
+
+
+            <p class="times"> <b>Ethnicity:</b> <%= recipeDetails.ethnicity %> </p>
+          </div>
+          <p> <b>Author:</b> <a href='/profile/<%=recipeDetails.author._id%>'> <%= recipeDetails.author.displayName %> </a></p>
+          <img src="<%= recipeDetails.photoURL %>">
+
+
+          <h3> <b>Ingredients:</b></h3>
+            <ul class='direction-list'>
+              <% recipeDetails.ingredients.forEach((oneIngredient) => { %>
+                <li> <%= oneIngredient %> </li>
+              <% }) %>
+            </ul>
+        </div>
+
+    </div>
+    <div class="col-sm-6">
+
+      <div class="col-content">
+        <h2> Directions </h2><br>
+          <ol class='direction-list'>
+            <% recipeDetails.recipe.forEach((oneStep) => { %>
+              <li> <%= oneStep %> </li><br>
+            <% }) %>
+          </ol>
+
+
+        <% if (recipeDetails.author._id.equals(user._id)) { %>
+          <div class="row">
+            <div class="col-xs-6">
+              <a href="/recipes/<%= recipeDetails.ethnicity %>/<%= recipeDetails._id %>/edit"> Edit This Recipe </a><br>
+            </div>
+              <a href="/recipes/<%= recipeDetails.ethnicity %>/<%= recipeDetails._id %>/delete"> Delete This Recipe </a>
+          </div>
+        <% } %>
+      </div>
+    </div>
+
+  </div>
 </div>

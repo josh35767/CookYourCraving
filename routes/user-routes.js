@@ -1,8 +1,11 @@
 const express = require('express');
 const UserModel = require('../models/user-model.js');
+const RecipeModel = require('../models/recipe-model.js');
 const bcrypt = require('bcrypt');
 const router = express.Router();
 const passport = require('passport');
+
+
 
 // ------------- SIGN UP ------------------------
 router.get('/sign-up', (req, res, next) => {
@@ -33,6 +36,13 @@ router.post('/sign-up', (req, res, next) => {
     return;
   }
 
+  if (req.body.displayName.length < 3 || req.body.displayName.length > 25) {
+    res.locals.errorMessage = 'Display Name must be between 3 and 25 characters.';
+    res.locals.bodyclass = "sign-up-body";
+    res.render('auth-views/sign-up');
+    return;
+  }
+
   if (req.body.password !== req.body.passwordConfirm) {
     res.locals.errorMessage = "Passwords do not match.";
     res.locals.bodyclass = "sign-up-body";
@@ -54,6 +64,7 @@ router.post('/sign-up', (req, res, next) => {
       const encryptedPassword =  bcrypt.hashSync(req.body.password, salt);
 
       const theUser = new UserModel({
+        displayName: req.body.displayName,
         username: req.body.userName,
         password: encryptedPassword
       });
@@ -63,7 +74,7 @@ router.post('/sign-up', (req, res, next) => {
           next(err);
           return;
         }
-        res.redirect('/');
+        res.redirect('/login');
       });
     }
   );
@@ -80,11 +91,36 @@ router.post('/login', passport.authenticate(
   'local',          // 1st argument -> name of stategy
   {
     successRedirect: '/',
-    failureRedirect: '/login'
+    failureRedirect: '/login',
   }
 ));
 
+// ---------------- Add display name ------------
+router.get('/displayname', (req, res, next) => {
+  res.locals.bodyclass = "display-name-body";
+  res.render('auth-views/display-name');
+});
 
+router.post('/displayname', (req, res, next) => {
+  if (req.body.displayName.length < 3 || req.body.displayName.length > 25) {
+    res.locals.errorMessage = 'Display Name must be between 3 and 25 characters.';
+    res.locals.bodyclass = "display-name-body";
+    res.render('auth-views/display-name');
+    return;
+  }
+
+  UserModel.findByIdAndUpdate(
+    req.user._id,
+    {displayName: req.body.displayName},
+    (err, someUser) => {
+      if (err) {
+        next(err);
+        return;
+      }
+      res.redirect('/profile/' + someUser._id);
+    }
+  );
+});
 // ------------- LOGOUT ------------------------
 router.get('/logout', (req, res, next) => {
   req.logout();
@@ -104,6 +140,7 @@ passport.authenticate (
 );
 
 // GOOGLE --------------
+
 router.get('/auth/google',
   passport.authenticate(
     'google',
@@ -114,21 +151,79 @@ router.get('/auth/google',
   )
 );
 router.get('/auth/google/callback',
-passport.authenticate (
-  'google',
-    {
-      successRedirect: '/',
-      failureRedirect: '/login'
+passport.authenticate ('google', { failureRedirect: '/login'}),
+  function(req, res) {
+    if (!req.user.displayName) {
+       res.redirect('/displayname');
     }
-  )
+  res.redirect('/');
+});
+
+
+router.get('/profile/:userId', (req, res, next) => {
+
+  UserModel
+  .findById(req.params.userId)
+  .populate('bookmarks')
+  .exec(
+    (err, userInfo) => {
+      let isOwnProfile = false;
+
+      if (req.isAuthenticated()) {
+        isOwnProfile = userInfo._id.equals(req.user._id);
+      }
+
+      if(err) {
+        next(err);
+      }
+      console.log(userInfo);
+      RecipeModel.find(
+        {author: req.params.userId},
+        (err, recipeDetails) => {
+          if (err) {
+            next(err);
+            return;
+          }
+          const uniqueEthnicity = [...new Set(recipeDetails.map(recipe => recipe.ethnicity))];
+          const uniqueBookMarkedEthnicity = [...new Set(userInfo.bookmarks.map(recipe => recipe.ethnicity))];
+          res.render('auth-views/user-profile.ejs',
+            {
+              ethnicityList: uniqueEthnicity,
+              recipeDetails: recipeDetails,
+              userDetails: userInfo,
+              isOwnProfile: isOwnProfile,
+              bookMarkedList: uniqueBookMarkedEthnicity
+            }
+          );
+
+
+        }
+      );
+  });
+});
+
+const multer = require('multer');
+
+const myUploader = multer({
+  dest: __dirname + '/../public/uploads'
+});
+
+router.post(
+  '/profile-picture',
+  myUploader.single('profilePicture'),
+  (req, res, next) => {
+    UserModel.findByIdAndUpdate(
+      req.user._id, {
+        photoURL: "/uploads/"+req.file.filename
+      },
+      (err, userInfo) => {
+
+      }
+    );
+    res.redirect('/profile/'+req.user._id);
+  }
 );
 
-router.get('/profile', (req, res, next) => {
-  if (!req.user) {
-    res.redirect('/login');
-    return;
-  }
-  res.render('auth-views/user-profile.ejs');
-});
+
 
 module.exports = router;

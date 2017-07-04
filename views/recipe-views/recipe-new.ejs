@@ -1,43 +1,79 @@
-<div class="container background-list">
+<div class="container background-list recipe-form-container">
 
   <h2> Create a New Recipe! </h2>
-  <form action="/recipes/new" method="post" class="form-horizontal">
+  <form action="/recipes/new" method="post" class="form-horizontal" enctype="multipart/form-data">
+    <div class="row">
+
+        <div class="col-sm-8">
+          <div class="form-group input-padding">
+            <label for="title-input"> Title for Recipe: </label>
+            <input type="text" class="form-control" name="recipeTitle" id="title-input" required>
+          </div>
+        </div>
+
+        <div class="col-sm-2">
+          <div class="form-group input-padding">
+            <label for="servings-input"> Serves: </label>
+            <input type="number" class="form-control" name="recipeServings" id="servings-input">
+          </div>
+        </div>
+
+    </div>
+
+
+    <div class="row">
+
+      <div class="col-sm-6">
+        <div class="form-group input-padding time-input">
+          <label for="prep-time-input"> Prep Time: </label>
+          <input type="number" class="form-control" name="recipePrepTimeHours" id="prep-time-input" min="0"> <p>Hours</p>
+          <input type="number" class="form-control" name="recipePrepTimeMinutes" min="0" max="59" required>  <p>Minutes</p>
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+        <div class="form-group input-padding time-input">
+          <label for="cooking-time-input"> Cooking Time: </label>
+          <input type="number" class="form-control" name="recipeCookingTimeHours" id="cooking-time-input" min="0"> <p>Hours</p>
+          <input type="number" class="form-control" name="recipeCookingTimeMinutes" min="0" max="59" required>  <p>Minutes</p>
+        </div>
+      </div>
+
+    </div>
+
+
+
+      <div class="form-group">
+        <label for="ethnicity-input"> Ethnicity: </label>
+        <select id="ethnicity-input" name="recipeEthnicity" required>
+          <option value="" disabled selected > Select Ethnicity</option>
+          <% foodCategories.forEach((oneCategory) => { %>
+           <option value="<%=oneCategory%>"> <%= oneCategory %> </option>
+          <% }) %>
+        </select>
+      </div>
+
+
 
     <div class="form-group">
-      <label for="title-input"> Title for Recipe: </label>
-      <input type="text" name="recipeTitle" id="title-input">
+      <label for="ingredients-input"> Ingredients: </label>
+      <textarea name="recipeIngredients" class="form-control" rows="8" id="ingredients-input"
+        placeholder="Put each ingredient on it's own line. Include measurements if applicable."></textarea>
     </div>
 
     <div class="form-group">
-      <label for="cooking-time-input"> Cooking Time: </label>
-      <input type="number" name="recipeTime" id="cooking-time-input">
+      <label for="recipe-input"> Cooking Directions: </label>
+      <textarea name="recipeRecipe" rows="8" class="form-control" id="recipe-input"
+      placeholder="Add each step on it's own line."></textarea>
     </div>
 
     <div class="form-group">
-      <label for="servings-input"> Serves: </label>
-      <input type="number" name="recipeServings" id="servings-input"><br>
+      <label for="">Upload Profile Picture</label>
+      <input type="file" name="recipePicture"> </input>
     </div>
 
-    <div class="form-group">
-      <label for="ingredients-input"> Ingredient: </label>
-      <textarea name="recipeIngredients" id="ingredients-input"> </textarea>
-    </div>
 
-    <div class="form-group">
-      <label for="recipe-input"> Recipe: </label>
-      <textarea name="recipeRecipe" id="recipe-input"> </textarea>
-    </div>
-
-    <div class="form-group">
-      <label for="ethnicty-input"> Ethnicty </label>
-      <select id="ethnicty-input" name="recipeEthnicty">
-        <% foodCategories.forEach((oneCategory) => { %>
-         <option value="<%=oneCategory%>"> <%= oneCategory %> </option>
-        <% }) %>
-      </select>
-    </div>
-
-    <button> Save this Recipe </button>
+    <button class="btn btn-lg btn-default"> Save this Recipe </button>
 
   </form>
 
