@@ -12,7 +12,7 @@ const recipeSchema = new Schema ({
     minutes: {type: Number,
               required: [true, "Prep Time required"],
               min: [0, "Minimum time of zero"],
-              max: [59, "If greater than 59, please use the hour selector."]},
+              max: [59, "Use hours if greater than 1 hour."]},
   },
   cookingTime: {
     hours: {type: Number},
@@ -22,7 +22,7 @@ const recipeSchema = new Schema ({
   },
   serves: {
     type: Number,
-    max: [20, "Please scale down your recipe to serve 20 or less."]
+    required: [true, "Field is required"]
   },
   ingredients: {
     type: [String],
