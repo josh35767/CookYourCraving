@@ -2,47 +2,63 @@
 
   <div class="row">
 
-    <div class='col-sm-6'>
+    <div class='col-md-6'>
       <div class='col-content'>
 
           <h2> <%= recipeDetails.title %> </h2>
           <% if (isUserLogged) { %>
               <% if(!isBookMarked) { %>
                   <form action="/recipes/<%= recipeDetails.ethnicity%>y/<%= recipeDetails._id%>/bookmark" method="post">
-                    <button class="btn btn-default"> Bookmark this Recipe </button>
+                    <button class="btn btn-default bookmark-btn">
+                      <span class="glyphicon glyphicon-bookmark"></span>
+                      Bookmark this Recipe
+                    </button>
                   </form>
               <% } else { %>
                 <form action="/recipes/<%= recipeDetails.ethnicity%>y/<%= recipeDetails._id%>/removeBookmark" method="post">
-                  <button class="btn btn-default"><span class="glyphicon glyphicon-bookmark"></span> Remove From Bookmarks </button>
+                  <button class="btn btn-default bookmark-btn">
+                    <span class="glyphicon glyphicon-remove"></span>
+                    Remove From Bookmarks
+                  </button>
                 </form>
           <% }}%>
           <div class="row">
-            <div class='col-xs-6'>
+            <div class='col-sm-6'>
 
               <p class="times"> <b>Cooking Time:</b>
-                <%if (recipeDetails.cookingTime.hours !== 0 && recipeDetails.cookingTime.hours !== null){ %>
+                <%if (recipeDetails.cookingTime.hours > 0 && recipeDetails.cookingTime.hours !== null){ %>
                   <%= recipeDetails.cookingTime.hours %> h
                 <% } %>
-                <%= recipeDetails.cookingTime.minutes %> mins
+                <%= recipeDetails.cookingTime.minutes %> m
               </p><br>
 
               <p class="times"> <b>Serves:</b> <%= recipeDetails.serves %></p>
 
             </div>
 
-            <p class="times"> <b>Prep Time:</b>
-              <%if (recipeDetails.prepTime.hours !== 0 && recipeDetails.prepTime.hours !== null){ %>
-                <%= recipeDetails.prepTime.hours %> h
-              <% } %>
-              <%= recipeDetails.prepTime.minutes %> mins
-            </p><br>
+            <div class="col-sm-6">
 
+              <p class="times"> <b>Prep Time:</b>
+                <%if (recipeDetails.prepTime.hours > 0 && recipeDetails.prepTime.hours !== null){ %>
+                  <%= recipeDetails.prepTime.hours %> h
+                <% } %>
+                <%= recipeDetails.prepTime.minutes %> m
+              </p><br>
 
+              <p class="times"> <b>Ethnicity:</b> <%= recipeDetails.ethnicity %> </p>
 
-            <p class="times"> <b>Ethnicity:</b> <%= recipeDetails.ethnicity %> </p>
+            </div>
           </div>
           <p> <b>Author:</b> <a href='/profile/<%=recipeDetails.author._id%>'> <%= recipeDetails.author.displayName %> </a></p>
           <img src="<%= recipeDetails.photoURL %>">
+
+          <% if(recipeDetails.author._id.equals(user._id)) { %>
+              <form action="/recipes/<%= recipeDetails.ethnicity %>/<%= recipeDetails._id%>/updatepicture" method="post" enctype="multipart/form-data">
+                <label for="recipeFile">Change Recipe Photo</label>
+                  <input type="file" name="recipePicture" id="recipeFile"> </input>
+                <button class='btn btn-default' id="upload-recipe-btn"> Upload </button>
+              </form>
+          <% } %>
 
 
           <h3> <b>Ingredients:</b></h3>
@@ -54,7 +70,7 @@
         </div>
 
     </div>
-    <div class="col-sm-6">
+    <div class="col-md-6">
 
       <div class="col-content">
         <h2> Directions </h2><br>

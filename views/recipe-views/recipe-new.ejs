@@ -7,7 +7,10 @@
         <div class="col-sm-8">
           <div class="form-group input-padding">
             <label for="title-input"> Title for Recipe: </label>
-            <input type="text" class="form-control" name="recipeTitle" id="title-input" required>
+            <input type="text" class="form-control" name="recipeTitle" id="title-input">
+            <% if (typeof titleValidationError === 'object') { %>
+                <p class="validation-error"> <%= titleValidationError.message %> </p>
+            <% } %>
           </div>
         </div>
 
@@ -15,6 +18,9 @@
           <div class="form-group input-padding">
             <label for="servings-input"> Serves: </label>
             <input type="number" class="form-control" name="recipeServings" id="servings-input">
+            <% if (typeof servesValidationError === 'object') { %>
+                <p class="validation-error"> <%= servesValidationError.message %> </p>
+            <% } %>
           </div>
         </div>
 
@@ -26,16 +32,24 @@
       <div class="col-sm-6">
         <div class="form-group input-padding time-input">
           <label for="prep-time-input"> Prep Time: </label>
-          <input type="number" class="form-control" name="recipePrepTimeHours" id="prep-time-input" min="0"> <p>Hours</p>
-          <input type="number" class="form-control" name="recipePrepTimeMinutes" min="0" max="59" required>  <p>Minutes</p>
+          <input type="number" class="form-control" name="recipePrepTimeHours" id="prep-time-input"> <p>Hours</p>
+          <input type="number" class="form-control" name="recipePrepTimeMinutes">  <p>Minutes</p>
+          <% if (typeof prepTimeValidationError === 'object') { %>
+              <p class="validation-error"> <%= prepTimeValidationError.message %> </p>
+          <% } %>
+        </div>
         </div>
       </div>
 
       <div class="col-sm-6">
         <div class="form-group input-padding time-input">
           <label for="cooking-time-input"> Cooking Time: </label>
-          <input type="number" class="form-control" name="recipeCookingTimeHours" id="cooking-time-input" min="0"> <p>Hours</p>
-          <input type="number" class="form-control" name="recipeCookingTimeMinutes" min="0" max="59" required>  <p>Minutes</p>
+          <input type="number" class="form-control" name="recipeCookingTimeHours" id="cooking-time-input"> <p>Hours</p>
+          <input type="number" class="form-control" name="recipeCookingTimeMinutes">  <p>Minutes</p>
+          <% if (typeof cookTimeValidationError === 'object') { %>
+              <p class="validation-error"> <%= cookTimeValidationError.message %> </p>
+          <% } %>
+        </div>
         </div>
       </div>
 
@@ -45,7 +59,7 @@
 
       <div class="form-group">
         <label for="ethnicity-input"> Ethnicity: </label>
-        <select id="ethnicity-input" name="recipeEthnicity" required>
+        <select id="ethnicity-input" name="recipeEthnicity">
           <option value="" disabled selected > Select Ethnicity</option>
           <% foodCategories.forEach((oneCategory) => { %>
            <option value="<%=oneCategory%>"> <%= oneCategory %> </option>
@@ -59,12 +73,20 @@
       <label for="ingredients-input"> Ingredients: </label>
       <textarea name="recipeIngredients" class="form-control" rows="8" id="ingredients-input"
         placeholder="Put each ingredient on it's own line. Include measurements if applicable."></textarea>
+        <% if (typeof ingredientsValidationError === 'object') { %>
+            <p class="validation-error"> <%= ingredientsValidationError.message %> </p>
+        <% } %>
+      </div>
     </div>
 
     <div class="form-group">
       <label for="recipe-input"> Cooking Directions: </label>
       <textarea name="recipeRecipe" rows="8" class="form-control" id="recipe-input"
       placeholder="Add each step on it's own line."></textarea>
+      <% if (typeof recipeValidationError === 'object') { %>
+          <p class="validation-error"> <%= recipeValidationError.message %> </p>
+      <% } %>
+    </div>
     </div>
 
     <div class="form-group">

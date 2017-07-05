@@ -8,9 +8,9 @@
 
         <% recipeArray.forEach((oneRecipe) => { %>
 
-          <div class='col-sm-6 col-md-4 col-lg-3'>
+          <div class='col-sm-6 col-md-4'>
             <div class='columnspacing foodsnippet'>
-              <img src="<%= oneRecipe.photoURL %>" class='placeholder'></img>
+              <img src="<%= oneRecipe.photoURL %>" class='recipeImage'></img>
               <h3> <%= oneRecipe.title %> </h3>
               <h4> Date Created: <%= oneRecipe.createdAt.toDateString() %> </h4>
               <h4> Serves: <%= oneRecipe.serves %> </h4>

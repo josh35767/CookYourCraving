@@ -4,6 +4,7 @@ const RecipeModel = require('../models/recipe-model.js');
 const bcrypt = require('bcrypt');
 const router = express.Router();
 const passport = require('passport');
+const validator = require('validator');
 
 
 
@@ -15,14 +16,14 @@ router.get('/sign-up', (req, res, next) => {
 
 router.post('/sign-up', (req, res, next) => {
 
-  if(req.body.password === "" || req.body.userName === "") {
+  if(validator.isEmpty(req.body.password) || validator.isEmpty(req.body.userName)) {
     res.locals.errorMessage = "Username and password required.";
     res.locals.bodyclass = "sign-up-body";
     res.render('auth-views/sign-up');
     return;
   }
 
-  if (req.body.password.length < 5 || req.body.password.length > 20) {
+  if (!validator.isLength(req.body.password, {min: 6, max: 20})) {
     res.locals.errorMessage = 'Password must be between 6 and 20 characters.';
     res.locals.bodyclass = "sign-up-body";
     res.render('auth-views/sign-up');
@@ -161,7 +162,7 @@ passport.authenticate ('google', { failureRedirect: '/login'}),
 
 
 router.get('/profile/:userId', (req, res, next) => {
-
+  res.locals.bodyclass = "profile-body";
   UserModel
   .findById(req.params.userId)
   .populate('bookmarks')

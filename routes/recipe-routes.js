@@ -62,8 +62,20 @@ router.post(
     photoURL: photoPicture
   });
     newRecipe.save((err, oneRecipe) => {
-      if(err) {
+      if(err && newRecipe.errors === undefined) {
         next(err);
+        return;
+      }
+
+      if(err && newRecipe.errors) {
+        res.locals.titleValidationError = newRecipe.errors.title;
+        res.locals.prepTimeValidationError = newRecipe.errors.prepTime.minutes;
+        res.locals.cookTimeValidationError = newRecipe.errors.cookingTime.minutes;
+        res.locals.servesValidationError = newRecipe.errors.serves;
+        res.locals.ingredientsValidationError = newRecipe.errors.ingredients;
+        res.locals.recipeValidationError = newRecipe.errors.recipe;
+
+        res.render('recipe-views/recipe-new.ejs');
         return;
       }
 
@@ -177,6 +189,23 @@ router.post('/recipes/:ethnicity/:recipeId/update', (req, res, next) => {
     }
   );
 });
+
+router.post(
+  '/recipes/:ethnicity/:recipeId/updatepicture',
+  myUploader.single('recipePicture'),
+  (req, res, next) => {
+    RecipeModel.findByIdAndUpdate(
+      req.params.recipeId, {
+        photoURL: "/uploads/"+req.file.filename
+      },
+      (err, userInfo) => {
+
+      }
+    );
+    res.redirect(`/recipes/${req.params.ethnicity}/${req.params.recipeId}`);
+  }
+);
+
 
 // =================== DELETE RECIPE ====================
 

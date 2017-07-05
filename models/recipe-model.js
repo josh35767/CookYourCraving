@@ -5,27 +5,32 @@ const recipeSchema = new Schema ({
   title: {
     type: String,
     required: [true, "Title is required"],
-    maxlength: [30, "Please use no more than 30 characters in the title."]
+    maxlength: [30, "Title can be no longer than 30 characters."]
   },
   prepTime: {
     hours: {type: Number},
-    minutes: {type: Number},
+    minutes: {type: Number,
+              required: [true, "Prep Time required"],
+              min: [0, "Minimum time of zero"],
+              max: [59, "If greater than 59, please use the hour selector."]},
   },
   cookingTime: {
     hours: {type: Number},
-    minutes: {type: Number},
+    minutes: {type: Number,
+              min: [0, "Minimum time of zero"],
+              max: [59, "If greater than 59, please use the hour selector."]},
   },
   serves: {
     type: Number,
-    maxlength: [20, "Please scale down your recipe to serve 20 or less."]
+    max: [20, "Please scale down your recipe to serve 20 or less."]
   },
   ingredients: {
     type: [String],
-    required: [true, "Ingredients are required"]
+    minlength: [1, "Ingredients are required"]
   },
   recipe: {
     type: [String],
-    required: [true, "Directions are required"]
+    minlength: [1, "Directions are required"]
   },
   ethnicity: {
     type: String,

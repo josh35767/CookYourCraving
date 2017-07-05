@@ -10,7 +10,7 @@
         <img src="<%=userDetails.photoURL%>" class="profile-picture">
         <% if(isOwnProfile) { %>
             <form action="/profile-picture" method="post" enctype="multipart/form-data">
-              <label for="">Upload Profile Picture</label>
+              <label for="profileFile">Upload Profile Picture</label>
                 <input type="file" name="profilePicture" id="profileFile"> </input>
               <button class='btn btn-default' id="upload-btn"> Upload </button>
             </form>
@@ -20,50 +20,53 @@
 
     <div class="col-sm-8 col-md-9">
 
-      <div class="profile-recipes">
+      <div class="col-sm-6">
         <% if (isOwnProfile) { %>
           <h2> My Recipes </h2>
-          <a href="/recipes/new"> + Add a new recipe </a>
+
         <% } else { %>
           <h2> Their Recipes </h2>
         <% } %>
 
-        <div class="dropdown">
-          <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            Recipe Ethnicities
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-            <% if(ethnicityList.length === 0) { %>
-              <li> Sorry, this user has no recipes. </li>
-            <% } %>
+        <% if (ethnicityList.length === 0) { %>
+          <div class="panel panel-default list-panel">
+            <h4> User has no recipes </h4>
+          </div>
+        <% } %>
 
-            <% ethnicityList.forEach((oneEthnicity) => { %>
-              <li><a href='/profile/recipes/<%=userDetails._id%>/<%= oneEthnicity%>'><%= oneEthnicity %></a></li>
-            <% }) %>
-          </ul>
-        </div>
+        <% ethnicityList.forEach((oneEthnicity) => { %>
+          <a href="/profile/recipes/<%=userDetails._id%>/<%= oneEthnicity%>" class="list-item">
+            <div class="panel panel-default list-panel">
+              <h4><%=oneEthnicity%></h4>
+            </div>
+          </a>
+        <%});%>
 
-
-        <h2> Bookmarked Recipes </h2>
-        <div class="dropdown">
-          <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            Recipe Ethnicities
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-            <% if(bookMarkedList.length === 0) { %>
-              <li> This user has no bookmarked recipes. </li>
-            <% } %>
-
-            <%bookMarkedList.forEach((oneEthnicity) => { %>
-              <li><a href='/profile/bookmarked/<%=userDetails._id%>/<%= oneEthnicity%>'><%= oneEthnicity %></a></li>
-            <% }) %>
-          </ul>
-        </div>
-
-
+        <% if(isOwnProfile) { %>
+          <a href="/recipes/new" class="new-recipe"> + Add a new recipe </a>
+        <% } %>
       </div>
+
+
+      <div class= "col-sm-6">
+        <h2> Bookmarked Recipes </h2>
+
+        <% if (bookMarkedList.length === 0) { %>
+          <div class="panel panel-default list-panel">
+            <h4> User has no bookmarks </h4>
+          </div>
+        <% } %>
+
+        <% bookMarkedList.forEach((oneEthnicity) => { %>
+          <a href="/profile/bookmarked/<%=userDetails._id%>/<%= oneEthnicity%>" class="list-item">
+            <div class="panel panel-default list-panel">
+              <h4><%= oneEthnicity %></h4>
+            </div>
+          </a>
+        <%});%>
+      </div>
+
+
     </div>
 
   </div>

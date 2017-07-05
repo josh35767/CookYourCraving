@@ -116,8 +116,8 @@ a:hover {
 }
 
 .background-list {
-  background-color: #eeeeee;
-  border-radius: 5px;
+  background-color: rgba(238, 238, 238, 0.9);
+  border-radius: 3px;
   h2 {
     color: #282828;
   }
@@ -260,21 +260,24 @@ a:hover {
 // ======================
 
 .foodsnippet {
-  padding: 10px 0;
-  border-radius: 5px;
-  margin-bottom: 5px;
-  text-align: center;
+  padding: 10px 15px;
+  border-radius: 2px;
+  margin: 10px 6%;
+  max-width: 400px;
   vertical-align: middle;
   height: 450px;
   background-color: white;
+  box-shadow: $shadow;
   h3 {
-    margin-top: 5px;
+    margin-top: 10px;
   }
-  .placeholder {
-    width: 90%;
+  .recipeImage {
+    width: 100%;
     max-width: 360px;
+    display: block;
     margin: 0 auto;
     height: 230px;
+    border: 2px solid #d6d6d6;
   }
 }
 
@@ -288,6 +291,10 @@ a:hover {
   margin-right: 10px !important;
 }
 
+
+.validation-error {
+  color: red;
+}
 
 .display-name-body {
   background-image: url('../images/worldpic.jpeg');
@@ -321,6 +328,20 @@ a:hover {
   border: 2px solid black;
 }
 
+.new-recipe {
+  display: inline-block;
+  font-size: 1.3em;
+  padding-top: 10px;
+}
+
+.profile-body {
+  background: url('../images/profile-background.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
 .profile-info {
   h2 {
     margin: 0;
@@ -332,6 +353,7 @@ a:hover {
   text-align: center;
   background-color: #f7f7f7;
   padding: 10px;
+  box-shadow: $shadow;
 }
 
 .profile-recipes {
@@ -340,6 +362,7 @@ a:hover {
 
 .profile-page {
   padding: 20px;
+  margin: 30px auto;
 }
 
 //======
@@ -368,6 +391,10 @@ a:hover {
   }
 }
 
+.bookmark-btn {
+  margin-bottom: 10px;
+}
+
 .details img {
   width: 80%;
   border: 2px solid black;
@@ -383,6 +410,10 @@ a:hover {
   box-shadow: $shadow;
 }
 
+#upload-recipe-btn {
+  margin-top: 10px;
+}
+
 .col-content {
   margin: 20px;
 }
@@ -396,12 +427,26 @@ a:hover {
 }
 //===========
 .recipe-list {
+  h2 {
+    padding-bottom: 15px;
+  }
   margin: 20px auto;
+  box-shadow: $shadow;
 }
 
-@media (min-width: 500px) and (max-width: 780px) {
-  .col-sm-6 {
-    width: 49%;
-    float: left;
+.glyphicon-bookmark {
+  color: red;
+}
+
+@media (max-width: 700px) {
+  .foodsnippet {
+    display: block;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 1000px) and (max-width: 1200px) {
+  .foodsnippet {
+    margin: 10px 3%;
   }
 }
