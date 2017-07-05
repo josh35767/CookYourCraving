@@ -68,9 +68,11 @@ router.post(
       }
 
       if(err && newRecipe.errors) {
+        console.log(newRecipe.errors);
+        console.log(newRecipe.errors.prepTime);
         res.locals.titleValidationError = newRecipe.errors.title;
-        res.locals.prepTimeValidationError = newRecipe.errors.prepTime.minutes;
-        res.locals.cookTimeValidationError = newRecipe.errors.cookingTime.minutes;
+        res.locals.prepTimeValidationError = newRecipe.errors.prepTime;
+        res.locals.cookTimeValidationError = newRecipe.errors.cookingTime;
         res.locals.servesValidationError = newRecipe.errors.serves;
         res.locals.ingredientsValidationError = newRecipe.errors.ingredients;
         res.locals.recipeValidationError = newRecipe.errors.recipe;
