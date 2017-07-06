@@ -106,7 +106,7 @@ router.get('/recipes/search', (req, res, next) => {
 router.get('/recipes/:ethnicity', (req, res, next) => {
   RecipeModel
   .find({ethnicity: req.params.ethnicity})
-  .sort({ rating: -1})
+  .sort({ rating: -1  })
   .exec(
     (err, recipeArray) => {
       if (err) {

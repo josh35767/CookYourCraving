@@ -81,8 +81,6 @@ passport.use (new FbStrategy(
   },
 
   (accessToken, refreshToken, profile, next) => {         // 2nd argument -> callback  (will be called when a user allows us to log them in with facebook)
-    console.log( '----------------');
-    console.log(profile);
     UserModel.findOne(
       { facebookId: profile.id },
       (err, userFromDb) => {
