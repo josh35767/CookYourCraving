@@ -1,3 +1,17 @@
+$.fn.stars = function() {
+  return $(this).each(function() {
+      // Get the value
+      var val = parseFloat($(this).html());
+      // Make sure that the value is in 0 - 5 range, multiply to get width
+      val = Math.round(val * 2) / 2;
+      var size = Math.max(0, (Math.min(5, val))) * 16;
+      // Create stars holder
+      var $span = $('<span />').width(size);
+      // Replace the numerical value with stars
+      $(this).html($span);
+  });
+};
+
 $(document).ready(function() {
   $("#upload-btn").hide();
   $("#upload-recipe-btn").hide();
@@ -8,6 +22,13 @@ $(document).ready(function() {
                 $(this).addClass('active'); $(this).parents('li').addClass('active');
             }
         });
+    });
+
+
+
+
+    $(function() {
+        $('span.stars').stars();
     });
 
     $("#profileFile").change(function() {

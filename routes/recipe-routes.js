@@ -79,6 +79,23 @@ router.post(
         res.redirect('/recipes/' + oneRecipe.ethnicity + '/' + oneRecipe._id);
     });
 });
+// Search ==============
+router.get('/recipes/search', (req, res, next) => {
+  let searchTerm = new RegExp(req.query.searchValue, 'ig');
+  RecipeModel.find({title: searchTerm},
+  (err, recipeArray) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.locals.keyWord = req.query.searchValue;
+    res.render('recipe-views/recipesbySearch.ejs',{
+      recipeArray: recipeArray,
+    });
+
+  }
+);
+});
 
 // List of Recipe in Specific Ethnicity ========================
 
@@ -275,6 +292,8 @@ router.get('/profile/recipes/:userId/:ethnicity', (req, res, next) => {
 
 });
 
+// Bookmarked Pages
+
 router.get('/profile/bookmarked/:userId/:ethnicity', (req, res, next) => {
   UserModel
     .findById(req.params.userId)
@@ -346,14 +365,14 @@ router.post("/recipes/:ethnicity/:recipeId/addReview", (req, res, next) => {
 
 
 
-      console.log("===================");
+
         recipeDetails.reviews.forEach ((oneReview) => {
           console.log("One rating" + oneReview.rating);
           if(oneReview.author.equals(req.user._id)) {
             hasPost = true;
           }
           reviewSum += oneReview.rating;
-          console.log("Current Sum" + reviewSum);
+
         });
       reviewSum += Number(req.body.reviewRating);
       reviewAverage = reviewSum / (recipeDetails.reviews.length + 1);
@@ -362,8 +381,6 @@ router.post("/recipes/:ethnicity/:recipeId/addReview", (req, res, next) => {
         reviewAverage = req.body.reviewRating;
       }
 
-      console.log(recipeDetails.reviews.length);
-      console.log(reviewAverage);
       RecipeModel.findByIdAndUpdate(req.params.recipeId, {
         "$set": {rating: reviewAverage},
       }, (err) => {
@@ -372,7 +389,7 @@ router.post("/recipes/:ethnicity/:recipeId/addReview", (req, res, next) => {
           return;
         }
         if (hasPost) {
-          res.redirect('/');
+          res.redirect('/login');
           return;
         }
 
@@ -400,6 +417,8 @@ router.post("/recipes/:ethnicity/:recipeId/addReview", (req, res, next) => {
     }
   );
 });
+
+// =========== search
 
 
 module.exports = router;

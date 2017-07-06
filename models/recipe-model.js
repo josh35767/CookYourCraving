@@ -37,7 +37,7 @@ const recipeSchema = new Schema ({
     type: String,
     enum: ["Cajun", "Chinese", "French", "Greek", "Indian", "Italian", "Japanese", "Thai", "Korean", "American", "Spanish", "Mexican", "Latin-American", "English", "German"]
   },
-  rating: {type: Number},
+  rating: {type: Number, default: 4},
   author: { type: Schema.Types.ObjectId, ref: 'User'},
   photoURL: {type: String, default: "/images/default-recipe.png"},
   reviews: [ ReviewModel.schema ]

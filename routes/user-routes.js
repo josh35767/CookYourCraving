@@ -83,6 +83,10 @@ router.post('/sign-up', (req, res, next) => {
 
 // ------------- LOGIN ------------------------
 router.get('/login', (req, res, next) => {
+  if (req.isAuthenticated()) {
+    res.redirect('/');
+    return;
+  }
   res.locals.bodyclass = "login-body";
   res.render('auth-views/login-view.ejs');
 

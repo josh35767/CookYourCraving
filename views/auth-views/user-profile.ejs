@@ -2,20 +2,28 @@
   <div class="row">
 
     <div class="col-sm-4 col-md-3">
+
       <div class="profile-info">
+
         <h2> <%= userDetails.displayName %> </h2>
+
         <% if(isOwnProfile) { %>
           <a href="/displayname"> Change Display Name </a>
         <% } %>
+
         <img src="<%=userDetails.photoURL%>" class="profile-picture">
         <% if(isOwnProfile) { %>
+
             <form action="/profile-picture" method="post" enctype="multipart/form-data">
               <label for="profileFile">Upload Profile Picture</label>
                 <input type="file" name="profilePicture" id="profileFile"> </input>
               <button class='btn btn-default' id="upload-btn"> Upload </button>
             </form>
+
         <% } %>
+
       </div>
+
     </div>
 
     <div class="col-sm-8 col-md-9">
@@ -58,11 +66,13 @@
         <% } %>
 
         <% bookMarkedList.forEach((oneEthnicity) => { %>
+
           <a href="/profile/bookmarked/<%=userDetails._id%>/<%= oneEthnicity%>" class="list-item">
             <div class="panel panel-default list-panel">
               <h4><%= oneEthnicity %></h4>
             </div>
           </a>
+          
         <%});%>
       </div>
 

@@ -1,6 +1,7 @@
 <div class="container background-list recipe-form-container">
 
   <h2> Create a New Recipe! </h2>
+  <hr>
   <form action="/recipes/new" method="post" class="form-horizontal" enctype="multipart/form-data">
     <div class="row">
 
@@ -21,7 +22,7 @@
         </div>
 
     </div>
-
+    <hr>
 
 
       <div>
@@ -44,7 +45,7 @@
 
 
       <div class="form-group">
-        <label for="ethnicity-input"> Ethnicity: </label>
+        <label for="ethnicity-input"> Ethnicity: </label><br>
         <select id="ethnicity-input" name="recipeEthnicity">
           <option value="" disabled selected > Select Ethnicity</option>
           <% foodCategories.forEach((oneCategory) => { %>
@@ -53,6 +54,7 @@
         </select>
       </div>
 
+    <hr>
 
 
     <div class="form-group">

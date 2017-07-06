@@ -36,7 +36,8 @@ theUser.save((err, userInfo) => {
       recipe: ["Oil a pan and heat it up", "Butterfly the chicken",
               "Stuff the chicken with the ham and bleu cheese", "Place chicken on pan and cook until juices run clear" ],
       ethnicity: "French",
-      author: userInfo._id
+      author: userInfo._id,
+      photoURL: "/images/cordonbleu.jpg"
     },
     {
       title: "General Tso's Chicken",
@@ -53,7 +54,8 @@ theUser.save((err, userInfo) => {
       recipe: ["Oil a pan and heat it up", "Boil 3 cups of water and place rice in water", "Flour the chicken and put in hot pan",
               "In a sauce pan mix soy sauce, garlic, rice wine vinegar, and brown sugar", "Once chicken is cooked, mix it wtth the soy sauce mix" ],
       ethnicity: "Chinese",
-      author: userInfo._id
+      author: userInfo._id,
+      photoURL: "/images/generalchicken.jpg"
     },
     {
       title: "Greek Salad",
@@ -71,7 +73,8 @@ theUser.save((err, userInfo) => {
               "Chop the peppers about a quarter inch in size.", "Wash and chop the romaine lettuce",
               "Gently toss all the ingredients in a large mixing bowl" ],
       ethnicity: "Greek",
-      author: userInfo._id
+      author: userInfo._id,
+      photoURL: "/images/greeksalad.jpg"
     },
     {
       title: "Spaghetti",
@@ -90,7 +93,8 @@ theUser.save((err, userInfo) => {
               "Add the sausage into the pan, cooking until browned.", "Add the tomatoes, and let the sauce simmer for two hours",
               "After 2 hours, start boiling water, once boiling, add the noodles.", "Cook the noodles until al-dente, then add sauce."],
       ethnicity: "Italian",
-      author: userInfo._id
+      author: userInfo._id,
+      photoURL: "/images/Italianstock.jpg"
     },
     {
       title: "Hamburgers",
@@ -108,7 +112,8 @@ theUser.save((err, userInfo) => {
               "Generously add salt and pepper to both sides of the beef patty", "Once grill is hot, place them on the grill",
               "Cook burger for about 6 minutes on both sides for medium-rare", "Serve on a roll, with cheese of your choice." ],
       ethnicity: "American",
-      author: userInfo._id
+      author: userInfo._id,
+      photoURL: "/images/burgers.jpeg"
     },
     {
       title: "Korean Short Ribs",
@@ -127,7 +132,8 @@ theUser.save((err, userInfo) => {
               "Heat up a grill to 300 degrees.", "Before grilling, take the ribs out of the marinade for about 10 minutes, and rest at room temperature",
               "Cook on grill until they reach an iternal temperature of 135 degrees."],
       ethnicity: "Korean",
-      author: userInfo._id
+      author: userInfo._id,
+      photoURL: "/images/Koreanstock.jpg"
     },
     {
       title: "Steak Fajitas",
@@ -145,7 +151,8 @@ theUser.save((err, userInfo) => {
               "In a sautee pan, cook the sliced onion and bell peppers until tender.", "Grill the flank steak until it reaches an internal temperature of 135.",
               "Slice the beef thinly against the grain and mix with the vegetables, serve on warm tortillas."],
       ethnicity: "Mexican",
-      author: userInfo._id
+      author: userInfo._id,
+      photoURL: "/images/fajita.jpeg"
     },
     {
       title: "Fish and Chips",
@@ -164,7 +171,8 @@ theUser.save((err, userInfo) => {
               "Fry the fish until it reaches 145 degrees", "Pull out the fish and put on a wire rack",
               "Drop the slice potatoes in the fryer until golden-brown, season with salt and pepper." ],
       ethnicity: "English",
-      author: userInfo._id
+      author: userInfo._id,
+      photoURL: "/images/fishandchips.jpg"
     },
   ];
 

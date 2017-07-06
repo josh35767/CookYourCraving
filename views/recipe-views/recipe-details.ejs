@@ -1,3 +1,7 @@
+<% if (typeof errorMessage === 'string') { %>
+  <p> <%= errorMessage %> </p>
+<% } %>
+
 <div class="container background-list details">
 
   <div class="row">
@@ -7,21 +11,31 @@
 
           <h2> <%= recipeDetails.title %> </h2>
           <% if (isUserLogged) { %>
+
               <% if(!isBookMarked) { %>
+
                   <form action="/recipes/<%= recipeDetails.ethnicity%>y/<%= recipeDetails._id%>/bookmark" method="post">
+
                     <button class="btn btn-default bookmark-btn">
                       <span class="glyphicon glyphicon-bookmark"></span>
                       Bookmark this Recipe
                     </button>
+
                   </form>
+
               <% } else { %>
+
                 <form action="/recipes/<%= recipeDetails.ethnicity%>y/<%= recipeDetails._id%>/removeBookmark" method="post">
+
                   <button class="btn btn-default bookmark-btn">
                     <span class="glyphicon glyphicon-remove"></span>
                     Remove From Bookmarks
                   </button>
+
                 </form>
+
           <% }}%>
+
           <div class="row">
             <div class='col-sm-6'>
 
@@ -49,18 +63,22 @@
 
             </div>
           </div>
+
           <p> <b>Author:</b> <a href='/profile/<%=recipeDetails.author._id%>'><%=recipeDetails.author.displayName%></a></p>
-          <% if (recipeDetails.rating) { %>
-          <p> Rating: <%= (recipeDetails.rating.toFixed(1)); %> </p>
-          <% } %>
+
+          <p> <b>Rating:</b> <span class="stars"><%= (recipeDetails.rating.toFixed(1)); %> </span> </p>
+
+
           <img src="<%= recipeDetails.photoURL %>">
 
           <% if(recipeDetails.author._id.equals(user._id)) { %>
+
               <form action="/recipes/<%= recipeDetails.ethnicity %>/<%= recipeDetails._id%>/updatepicture" method="post" enctype="multipart/form-data">
                 <label for="recipeFile">Change Recipe Photo</label>
                   <input type="file" name="recipePicture" id="recipeFile"> </input>
                 <button class='btn btn-default' id="upload-recipe-btn"> Upload </button>
               </form>
+
           <% } %>
 
 
@@ -99,12 +117,12 @@
 </div>
 
   <div class="container background-list review-list">
-  <!-- Button trigger modal -->
+  <!--  ======Reviews SECTION========= -->
 <h2> Reviews </h2>
 
   <% if (isUserLogged) { %>
 
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+      <button type="button" class="btn review-button" data-toggle="modal" data-target="#myModal">
         Write a Review
       </button>
 
@@ -119,7 +137,7 @@
     <% recipeDetails.reviews.forEach((oneReview) => { %>
 
       <div class='review-info'>
-        <h4> Rating: <%= oneReview.rating %> </h4>
+        <h4> <b>Rating:</b> <%= oneReview.rating %> </h4>
 
         <hr>
 
@@ -182,7 +200,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="Submit" class="btn btn-primary">Save changes</button>
+        <button type="Submit" class="btn review-button">Submit Review</button>
         </form>
       </div>
     </div>

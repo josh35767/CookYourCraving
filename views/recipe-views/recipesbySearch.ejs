@@ -1,10 +1,10 @@
 <div class="container background-list recipe-list">
-  <h2> <%= userTitle %></h2>
+  <h2> Results from keyword: <i><%= keyWord %></i></h2>
 </div>
 
 <div class="container background-list recipe-list recipe-list-main">
       <% if (recipeArray.length === 0) { %>
-        <h3> Sorry, no recipes in this category! </h3>
+        <h3> Sorry, no results found with that search </h3>
       <% } else { %>
           <div class='row ethnicity-row'>
 
@@ -17,6 +17,7 @@
               <hr>
               <h4> Date Created: <%= oneRecipe.createdAt.toDateString() %> </h4>
               <h4> Rating: <span class="stars"><%= (oneRecipe.rating.toFixed(1)); %> </span></h4>
+              <h4> Ethnicity: <%= oneRecipe.ethnicity %> </h4>
               <a href='/recipes/<%= oneRecipe.ethnicity %>/<%= oneRecipe._id %>'> View This Recipe </a>
             </div>
           </div>
