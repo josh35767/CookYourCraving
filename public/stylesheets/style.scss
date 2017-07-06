@@ -193,6 +193,9 @@ a:hover {
   padding-top: 20px;
   border-top-right-radius: 0px;
   border-top-left-radius: 0px;
+  .sign-up-link {
+    font-size: 1.2em;
+  }
   hr {
     border-color: #969696;
 
@@ -230,6 +233,7 @@ a:hover {
     background-color: #282828;
     color: #f7f7f7;
   }
+
 }
 
 //========================
@@ -349,15 +353,15 @@ a:hover {
   margin: 20px auto;
   padding: 0 50px 10px 50px;
   color: #303030;
+  border-radius: 8px;
   h2 {
     text-decoration: underline;
   }
   .text-input {
     background-color: transparent;
-    border: none;
+    border: 1.2px  solid #303030;
     border-radius: 0;
     box-shadow: none;
-    border-bottom: 2px solid #303030;
   }
   textarea {
     border: 1.2px solid #303030;
@@ -365,6 +369,7 @@ a:hover {
   }
   hr {
     border-color: #444444;
+    border-style: dashed;
     margin: 20px -50px;
   }
   input[type=number]::-webkit-inner-spin-button,
@@ -372,6 +377,10 @@ a:hover {
     -webkit-appearance: none;
     margin: 0;
   }
+}
+
+.new-title {
+  background-color: red !important;
 }
 
 .recipe-new-body {
@@ -431,13 +440,7 @@ a:hover {
   padding-top: 10px;
 }
 
-.profile-body {
-  background: url('../images/profile-background.jpg') no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-}
+
 
 .profile-info {
   h2 {
@@ -596,6 +599,38 @@ background-image: url("../images/textured.png");
   h5 {
     text-decoration: underline;
   }
+}
+// ========= LET'S GET STARTED =====
+.intro-container {
+  background-color: white;
+  width: 100%;
+  font-family: 'Roboto', sans-serif !important;
+  font-weight: 200;
+  max-width: 500px;
+  text-align: center;
+  margin: 0 auto;
+  border-radius: 3px;
+  margin-top: 50px;
+  h2 {
+    background-color: #222222;
+    color: white;
+    padding: 10px 0;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+  }
+  h3 {
+    font-size: 2em;
+    margin: 40px 0;
+  }
+  .btn-default {
+    background-color: #222222;
+    color: white;
+  }
+}
+
+.intro-content {
+  margin: 10px;
+  padding-bottom: 10px;
 }
 
 @media (max-width: 700px) {

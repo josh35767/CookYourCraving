@@ -14,6 +14,10 @@ router.get('/sign-up', (req, res, next) => {
   res.render('auth-views/sign-up');
 });
 
+router.get('/intro', (req, res, next) => {
+  res.render('auth-views/started.ejs');
+});
+
 router.post('/sign-up', (req, res, next) => {
 
   if(validator.isEmpty(req.body.password) || validator.isEmpty(req.body.userName)) {

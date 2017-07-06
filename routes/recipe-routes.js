@@ -44,8 +44,10 @@ router.post(
     if (typeof req.file === "object") {
       photoPicture = "/uploads/"+req.file.filename;
     }
+
   const ingredientsArray = decodeURIComponent(req.body.recipeIngredients).split(/\r\n?|\n/);
   const recipeArray = decodeURIComponent(req.body.recipeRecipe).split(/\r\n?|\n/);
+
   const newRecipe = new RecipeModel ({
     title: req.body.recipeTitle,
     cookingTime: {
@@ -63,6 +65,7 @@ router.post(
     author: req.user._id,
     photoURL: photoPicture
   });
+
     newRecipe.save((err, oneRecipe) => {
       if(err && newRecipe.errors === undefined) {
         next(err);
@@ -79,6 +82,7 @@ router.post(
         res.redirect('/recipes/' + oneRecipe.ethnicity + '/' + oneRecipe._id);
     });
 });
+
 // Search ==============
 router.get('/recipes/search', (req, res, next) => {
   let searchTerm = new RegExp(req.query.searchValue, 'ig');
@@ -100,8 +104,10 @@ router.get('/recipes/search', (req, res, next) => {
 // List of Recipe in Specific Ethnicity ========================
 
 router.get('/recipes/:ethnicity', (req, res, next) => {
-  RecipeModel.find(
-    {ethnicity: req.params.ethnicity},
+  RecipeModel
+  .find({ethnicity: req.params.ethnicity})
+  .sort({ rating: -1})
+  .exec(
     (err, recipeArray) => {
       if (err) {
         next(err);
@@ -375,12 +381,14 @@ router.post("/recipes/:ethnicity/:recipeId/addReview", (req, res, next) => {
 
         });
       reviewSum += Number(req.body.reviewRating);
+      console.log("sum" + reviewSum);
       reviewAverage = reviewSum / (recipeDetails.reviews.length + 1);
-
+      console.log("Average" + reviewAverage);
       if (recipeDetails.reviews.length === 0) {
         reviewAverage = req.body.reviewRating;
       }
 
+      console.log(reviewAverage);
       RecipeModel.findByIdAndUpdate(req.params.recipeId, {
         "$set": {rating: reviewAverage},
       }, (err) => {
