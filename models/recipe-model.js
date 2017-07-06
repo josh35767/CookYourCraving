@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const ReviewModel = require('./review-model.js');
 
 const recipeSchema = new Schema ({
   title: {
@@ -36,8 +37,10 @@ const recipeSchema = new Schema ({
     type: String,
     enum: ["Cajun", "Chinese", "French", "Greek", "Indian", "Italian", "Japanese", "Thai", "Korean", "American", "Spanish", "Mexican", "Latin-American", "English", "German"]
   },
+  rating: {type: Number},
   author: { type: Schema.Types.ObjectId, ref: 'User'},
-  photoURL: {type: String, default: "/images/default-recipe.png"}
+  photoURL: {type: String, default: "/images/default-recipe.png"},
+  reviews: [ ReviewModel.schema ]
 },
 {
   timestamps: true

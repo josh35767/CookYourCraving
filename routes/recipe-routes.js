@@ -1,6 +1,7 @@
 const express = require('express');
 const RecipeModel = require("../models/recipe-model.js");
 const UserModel = require("../models/user-model.js");
+const ReviewModel = require("../models/review-model.js");
 const router  = express.Router();
 const foodCategories = RecipeModel.schema.path('ethnicity').enumValues; // All the possible ethnic types, declared by the Recipe Schema
 
@@ -15,6 +16,7 @@ router.get('/recipes', (req, res, next) => {
 
 
 router.get('/recipes/new', (req, res, next) => {
+  res.locals.bodyclass = "recipe-new-body";
   if (!req.isAuthenticated()) {
     res.redirect('/login');
     return;
@@ -102,11 +104,12 @@ router.get('/recipes/:ethnicity', (req, res, next) => {
 // Details of Recipe ========================
 
 router.get('/recipes/:ethnicity/:recipeId', (req, res, next) => {
+  const page = Number(req.params.page) - 1;
   res.locals.bodyclass = "details-body";
   let isBookMarked = false;
   RecipeModel
     .findById(req.params.recipeId)
-    .populate('author')
+    .populate('author reviews.author')
     .exec((err, recipeDetails) => {
       if (err) {
         next(err);
@@ -131,6 +134,7 @@ router.get('/recipes/:ethnicity/:recipeId', (req, res, next) => {
 // Edit of Recipe ========================
 
 router.get('/recipes/:ethnicity/:recipeId/edit', (req, res, next) => {
+  res.locals.bodyclass = "recipe-new-body";
   if (!req.isAuthenticated()) {
     res.redirect('/login');
     return;
@@ -324,6 +328,77 @@ router.post('/recipes/:ethnicity/:recipeId/removeBookmark',(req, res, next) => {
 
 
 
+});
+
+//Add review
+
+router.post("/recipes/:ethnicity/:recipeId/addReview", (req, res, next) => {
+  RecipeModel.findById(
+    req.params.recipeId,
+    (err, recipeDetails) => {
+      if(err) {
+        next(err);
+        return;
+      }
+      let reviewAverage = 0;
+      let hasPost = false;
+      let reviewSum = 0;
+
+
+
+      console.log("===================");
+        recipeDetails.reviews.forEach ((oneReview) => {
+          console.log("One rating" + oneReview.rating);
+          if(oneReview.author.equals(req.user._id)) {
+            hasPost = true;
+          }
+          reviewSum += oneReview.rating;
+          console.log("Current Sum" + reviewSum);
+        });
+      reviewSum += Number(req.body.reviewRating);
+      reviewAverage = reviewSum / (recipeDetails.reviews.length + 1);
+
+      if (recipeDetails.reviews.length === 0) {
+        reviewAverage = req.body.reviewRating;
+      }
+
+      console.log(recipeDetails.reviews.length);
+      console.log(reviewAverage);
+      RecipeModel.findByIdAndUpdate(req.params.recipeId, {
+        "$set": {rating: reviewAverage},
+      }, (err) => {
+        if(err) {
+          next(err);
+          return;
+        }
+        if (hasPost) {
+          res.redirect('/');
+          return;
+        }
+
+
+        const newReview = new ReviewModel({
+          rating: Number(req.body.reviewRating),
+          comments: req.body.reviewComments,
+          author: req.user._id
+        });
+
+        recipeDetails.reviews.push(newReview);
+
+        recipeDetails.save((err) => {
+          if(err){
+            next(err);
+            return;
+          }
+
+          res.redirect(`/recipes/${recipeDetails.ethnicity}/${recipeDetails._id}`);
+        });
+
+      });
+
+
+    }
+  );
 });
 
 
