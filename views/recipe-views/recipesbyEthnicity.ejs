@@ -13,7 +13,7 @@
           <div class='col-sm-6 col-md-4'>
 
             <div class='columnspacing foodsnippet'>
-              <img src="<%= oneRecipe.photoURL %>" class='recipeImage'></img>
+              <img src="<%= oneRecipe.photoURL %>" onError="this.src = '/images/default-recipe.png'" class='recipeImage'></img>
 
               <h3> <%= oneRecipe.title %> </h3><hr>
               <h4> Date Created: <%= oneRecipe.createdAt.toDateString() %> </h4>
