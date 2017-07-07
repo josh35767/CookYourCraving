@@ -1,9 +1,10 @@
 <div class="container background-list recipe-form-container">
 
   <h2> Edit <i> <%= recipeDetails.title %> </i> </h2>
+  <hr>
   <form action="/recipes/<%= recipeDetails.ethnicity %>/<%= recipeDetails._id %>/update" method="post" class="form-horizontal">
     <div class="row">
-
+      <div class="new-title">
         <div class="col-sm-8">
           <div class="form-group input-padding">
             <label for="title-input"> Title for Recipe: </label>
@@ -17,9 +18,9 @@
             <input type="number" class="form-control text-input" name="recipeServings" id="servings-input" value="<%= recipeDetails.serves %>">
           </div>
         </div>
-
+      </div>
     </div>
-
+    <hr>
 
 
 
@@ -43,9 +44,6 @@
         </div>
       </div>
 
-
-
-
     <div class="form-group">
       <label for="ethnicity-input"> Ethnicity: </label>
       <select id="ethnicity-input" name="recipeEthnicity" required>
@@ -58,7 +56,8 @@
         <% }) %>
       </select>
     </div>
-
+    <hr>
+    
     <div class="form-group">
       <label for="ingredients-input"> Ingredients: </label>
       <textarea name="recipeIngredients" class="form-control" rows="8" id="ingredients-input"

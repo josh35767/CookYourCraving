@@ -20,7 +20,33 @@ theUser.save((err, userInfo) => {
     return;
   }
 
-  const RecipeArray = [
+  const RecipeArray = [];
+
+
+  for (let i = 1; i <= 30; i += 1) {
+    RecipeArray.push(    {
+          title: i+"-Korean Short Ribs",
+          prepTime: {
+            hours: 8,
+            minutes: 0
+          },
+          cookingTime: {
+            hours: 0,
+            minutes: 45
+          },
+          serves: 3,
+          ingredients: ["Flanken style Short Ribs", "Soy Sauce", "Scallions", "Brown Sugar", "Garlic", "Ginger", "Sesame Seeds"],
+          recipe: ["Mix soy sauce, chopped scallions, brown sugar, garlic, ginger, and sesame seeds in mixing bowl.",
+                    "Place marinade in shallow dish and marinate it for 8 hours, or over night.",
+                  "Heat up a grill to 300 degrees.", "Before grilling, take the ribs out of the marinade for about 10 minutes, and rest at room temperature",
+                  "Cook on grill until they reach an iternal temperature of 135 degrees."],
+          ethnicity: "Korean",
+          author: userInfo._id,
+          photoURL: "/images/Koreanstock.jpg"
+        });
+  }
+
+RecipeArray.push(
     {
       title: "Chicken Cordon Bleu",
       prepTime: {
@@ -115,26 +141,7 @@ theUser.save((err, userInfo) => {
       author: userInfo._id,
       photoURL: "/images/burgers.jpeg"
     },
-    {
-      title: "Korean Short Ribs",
-      prepTime: {
-        hours: 8,
-        minutes: 0
-      },
-      cookingTime: {
-        hours: 0,
-        minutes: 45
-      },
-      serves: 3,
-      ingredients: ["Flanken style Short Ribs", "Soy Sauce", "Scallions", "Brown Sugar", "Garlic", "Ginger", "Sesame Seeds"],
-      recipe: ["Mix soy sauce, chopped scallions, brown sugar, garlic, ginger, and sesame seeds in mixing bowl.",
-                "Place marinade in shallow dish and marinate it for 8 hours, or over night.",
-              "Heat up a grill to 300 degrees.", "Before grilling, take the ribs out of the marinade for about 10 minutes, and rest at room temperature",
-              "Cook on grill until they reach an iternal temperature of 135 degrees."],
-      ethnicity: "Korean",
-      author: userInfo._id,
-      photoURL: "/images/Koreanstock.jpg"
-    },
+
     {
       title: "Steak Fajitas",
       prepTime: {
@@ -173,9 +180,8 @@ theUser.save((err, userInfo) => {
       ethnicity: "English",
       author: userInfo._id,
       photoURL: "/images/fishandchips.jpg"
-    },
-  ];
-
+    }
+);
   RecipeModel.create(
     RecipeArray,
     (err, newRecipe) => {

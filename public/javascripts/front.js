@@ -1,3 +1,5 @@
+
+
 $.fn.stars = function() {
   return $(this).each(function() {
       // Get the value
@@ -12,7 +14,17 @@ $.fn.stars = function() {
   });
 };
 
+
+
+var msnry = new Masonry( '.grid', {
+  itemSelector: '.grid-item',
+  columnWidth: '.grid-item',
+  horizontalOrder: true,
+  percentPosition: true
+});
+
 $(document).ready(function() {
+
   $("#upload-btn").hide();
   $("#upload-recipe-btn").hide();
 
@@ -23,7 +35,6 @@ $(document).ready(function() {
             }
         });
     });
-
 
 
 

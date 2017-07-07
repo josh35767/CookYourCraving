@@ -8,9 +8,10 @@
       <% } else { %>
           <div class='row ethnicity-row'>
 
+        <div class="grid">
         <% recipeArray.forEach((oneRecipe) => { %>
 
-          <div class='col-sm-6 col-md-4'>
+          <div class='grid-item'>
 
             <div class='columnspacing foodsnippet'>
               <img src="<%= oneRecipe.photoURL %>" onError="this.src = '/images/default-recipe.png'" class='recipeImage'></img>
@@ -24,9 +25,34 @@
           </div>
 
         <% }); %>
+        </div>
 
         </div>
       <%}%>
 
+      <div class="pagination-buttons">
+      <ul class="pagination">
 
+        <% if (currentPage > 1) { %>
+          <li>
+            <a href="<%= paginationLink + (currentPage - 1) %>" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+        <% } %>
+
+        <% for (let i = 1; i <= pageCount; i++) { %>
+          <li><a href="<%= paginationLink + i %>"><%= i %></a></li>
+        <% } %>
+
+        <% if (currentPage < pageCount ) {%>
+        <li>
+          <a href="<%= paginationLink + (currentPage + 1) %>" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+
+        <% } %>
+      </ul>
+      </div>
 </div>

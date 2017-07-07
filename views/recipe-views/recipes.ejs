@@ -1,30 +1,35 @@
 <div class="list-bg">
 
-  <div class="container background-list">
-    <h2>Select a Cuisine</h2>
+  <div class="container background-list all-cuisines">
+    <div class='all-cuisines-content'>
+      <h2>Select a Cuisine</h2>
 
-    <% if(isUserLogged) { %>
-      <a href="/recipes/new" class="add-new-link"> + Add a new recipe </a>
-    <% } %>
+        <% if(isUserLogged) { %>
+          <a href="/recipes/new" class="add-new-link"> + Add a new recipe </a>
+        <% } %>
 
-      <form class="form" action="/recipes/search" method="get">
-        <label for="search-input" class="search-label"> Search for a Recipe: </label>
-        <input type="text" class="form-control search-box" name="searchValue" id="search-input">
+      <form class="form" action="/search" method="get">
+        <label for="search-input" class="search-label"> Search for a Recipe: </label><br>
+        <input type="text" class="form-control search-box" name="searchValue" id="search-input"><br>
         <button class="btn review-button search-btn" > Search </button>
         <hr>
       </form>
+
       <div class="row">
-      <% foodCategories.forEach((someFood) => { %>
-        <div class="col-sm-6">
-        <div class="list-column">
-        <a href="/recipes/<%=someFood%>" class="list-item">
-          <div class="panel panel-default list-panel">
-            <h4><%=someFood%></h4>
+        <% foodCategories.forEach((someFood) => { %>
+          <div class="col-xs-6">
+
+            <div class="list-column">
+              <a href="/recipes/<%=someFood%>/results" class="list-item">
+                <div class="panel panel-default list-panel"><h4><%=someFood%></h4></div>
+              </a>
+            </div>
+
           </div>
-        </a>
-        </div>
-        </div>
-      <%});%>
+        <%});%>
+
+      </div>
+      
     </div>
-    </div>
+  </div>
 </div>

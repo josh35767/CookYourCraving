@@ -8,6 +8,7 @@ const foodCategories = RecipeModel.schema.path('ethnicity').enumValues; // All t
 // List of Recipe Ethnicity ========================
 
 router.get('/recipes', (req, res, next) => {
+  res.locals.bodyclass = "list-bg";
   res.render('recipe-views/recipes');
 });
 
@@ -41,11 +42,11 @@ router.post(
   (req, res, next) => {
 
   let photoPicture = "/images/default-recipe.png";
-    if (typeof req.file === "object") {
+    if (typeof req.file === "object") {  // checks if user uploaded picture, otherwise, it's default
       photoPicture = "/uploads/"+req.file.filename;
     }
 
-  const ingredientsArray = decodeURIComponent(req.body.recipeIngredients).split(/\r\n?|\n/);
+  const ingredientsArray = decodeURIComponent(req.body.recipeIngredients).split(/\r\n?|\n/); // Splits line breaks into array
   const recipeArray = decodeURIComponent(req.body.recipeRecipe).split(/\r\n?|\n/);
 
   const newRecipe = new RecipeModel ({
@@ -72,10 +73,13 @@ router.post(
         return;
       }
 
-      if(err && newRecipe.errors) {
+      if(err && newRecipe.errors) {  // Validation checker
         res.locals.titleValidationError = newRecipe.errors.title;
-
+        res.locals.servesValidationError = newRecipe.errors.serves;
+        res.locals.prepTimeValidationError = newRecipe.errors['prepTime.minutes'];
+        res.locals.cookingTimeValidationError = newRecipe.errors['cookingTime.minutes'];
         res.render('recipe-views/recipe-new.ejs');
+        console.log(newRecipe.errors);
         return;
       }
 
@@ -84,75 +88,80 @@ router.post(
 });
 
 // Search ==============
-router.get('/recipes/search', (req, res, next) => {
+router.get('/search/:page?', (req, res, next) => {
+  let currentPage = Number(req.params.page) || 1;
   let searchTerm = new RegExp(req.query.searchValue, 'ig');
-  RecipeModel.find({title: searchTerm},
-  (err, recipeArray) => {
-    if (err) {
-      next(err);
-      return;
-    }
-    res.locals.keyWord = req.query.searchValue;
-    res.render('recipe-views/recipesbySearch.ejs',{
-      recipeArray: recipeArray,
-    });
+  const page = Number(req.params.page) - 1;
+  let limitAmount = 16;           // Limits amount of recipes per page to 16
+  RecipeModel
+    .find({title: searchTerm})
+    .count()
+    .exec(
+    (err, count) => {
+      if (err) {
+        next(err);
+        return;
+      }
+      RecipeModel.find({title: searchTerm})
+      .skip(page*limitAmount)
+      .limit(limitAmount)
+      .sort({ rating: -1  })
+      .exec(
+      (err, recipeArray) => {
+        if (err) {
+          next(err);
+          return;
+        }
 
-  }
-);
+        res.render('recipe-views/recipesbySearch.ejs',{
+          recipeArray: recipeArray,
+          keyWord: req.query.searchValue,
+          pageCount: Math.ceil(count/limitAmount),
+          currentPage: currentPage
+        });
+
+      }
+    );
+  });
 });
+
 
 // List of Recipe in Specific Ethnicity ========================
 
-router.get('/recipes/:ethnicity', (req, res, next) => {
-  RecipeModel
-  .find({ethnicity: req.params.ethnicity})
-  .sort({ rating: -1  })
-  .exec(
-    (err, recipeArray) => {
-      if (err) {
-        next(err);
-        return;
-      }
-      res.locals.userTitle = `${req.params.ethnicity} Cuisine`;
-      res.render('recipe-views/recipesbyEthnicity.ejs',{
-        recipeArray: recipeArray,
-        recipeEthnicity: req.params.ethnicity
-      });
-
-    }
-  );
-
-});
-
-// Details of Recipe ========================
-
-router.get('/recipes/:ethnicity/:recipeId/:page?', (req, res, next) => {
-  const currentpage = req.params.page || 1;
+router.get('/recipes/:ethnicity/results/:page?', (req, res, next) => {
+  let currentPage = Number(req.params.page) || 1;
   const page = Number(req.params.page) - 1;
-  const skip = page * 5;
-  res.locals.bodyclass = "details-body";
-  res.locals.currentPage = Number(currentpage);
-  let isBookMarked = false;
-  RecipeModel
-    .findById(req.params.recipeId, {reviews: {$slice: [skip, 5]}})
-    .populate('author reviews.author')
-    .exec((err, recipeDetails) => {
-      if (err) {
-        next(err);
-        return;
-      }
-
-      if (req.isAuthenticated()) {
-        isBookMarked = req.user.bookmarks.some((bookmark) => {
-          return bookmark.equals(recipeDetails._id);
+  let limitAmount = 16;
+  RecipeModel.find({ethnicity: req.params.ethnicity}, '_id') // Gets the amount of recipes in given ethnicity, to show pagination buttonss
+  .count()
+  .exec(
+  (err, count) => {
+  if(err) {
+    next(err);
+    return;
+  }
+    RecipeModel
+    .find({ethnicity: req.params.ethnicity})    // Limits results based on earlier specified limit amount
+    .skip(page*limitAmount) //
+    .limit(limitAmount)
+    .sort({ rating: -1  })
+    .exec(
+      (err, recipeArray) => {
+        if (err) {
+          next(err);
+          return;
+        }
+        res.locals.paginationLink = `/recipes/${req.params.ethnicity}/results/`;
+        res.locals.userTitle = `${req.params.ethnicity} Cuisine`;
+        res.render('recipe-views/recipesbyEthnicity.ejs',{
+          recipeArray: recipeArray,
+          recipeEthnicity: req.params.ethnicity,
+          pageCount: Math.ceil(count/limitAmount),
+          currentPage: currentPage
         });
       }
-
-      res.render('recipe-views/recipe-details.ejs', {
-        recipeDetails: recipeDetails,
-        isBookMarked: isBookMarked
-      });
-    });
+    );
+  });
 
 
 });
@@ -185,6 +194,8 @@ router.get('/recipes/:ethnicity/:recipeId/edit', (req, res, next) => {
   );
 });
 
+
+
 router.post('/recipes/:ethnicity/:recipeId/update', (req, res, next) => {
   const ingredientsArray = decodeURIComponent(req.body.recipeIngredients).split(/\r\n?|\n/);
   const recipeArray = decodeURIComponent(req.body.recipeRecipe).split(/\r\n?|\n/);
@@ -214,6 +225,8 @@ router.post('/recipes/:ethnicity/:recipeId/update', (req, res, next) => {
     }
   );
 });
+
+
 
 router.post(
   '/recipes/:ethnicity/:recipeId/updatepicture',
@@ -267,9 +280,11 @@ router.get('/recipes/:ethnicity/:recipeId/delete', (req, res, next) => {
   );
 });
 
-// User's Recipe by ethnicity
-router.get('/profile/recipes/:userId/:ethnicity', (req, res, next) => {
+// ============ User's Recipe by ethnicity
+
+router.get('/profile/recipes/:userId/:ethnicity/:page?', (req, res, next) => {
   let userProfile;
+    
   UserModel.findById(
     req.params.userId,
     (err, userInfo) => {
@@ -281,48 +296,121 @@ router.get('/profile/recipes/:userId/:ethnicity', (req, res, next) => {
       userProfile = userInfo;
     }
   );
-  RecipeModel.find(
-    {ethnicity: req.params.ethnicity,
-    author: req.params.userId},
-    (err, recipeArray) => {
+
+  let currentPage = Number(req.params.page) || 1;
+  const page = Number(req.params.page) - 1;
+  let limitAmount = 16;
+  RecipeModel
+    .find({author: req.params.userId, ethnicity: req.params.ethnicity}, '_id') // Gets the amount of recipes in given ethnicity, to show pagination buttonss
+    .count()
+    .exec(
+      (err, count) => {
+      if(err) {
+        next(err);
+        return;
+      }
+      RecipeModel.find(
+        {ethnicity: req.params.ethnicity,
+        author: req.params.userId})
+        .skip(page*limitAmount)
+        .limit(limitAmount)
+        .sort({ rating: -1  })
+        .exec(
+        (err, recipeArray) => {
+          if (err) {
+            next(err);
+            return;
+          }
+          res.locals.paginationLink = `/profile/recipes/${userProfile._id}/${req.params.ethnicity}/`;
+          res.locals.userTitle = `${userProfile.displayName}'s ${req.params.ethnicity} Recipes`;
+          res.render('recipe-views/recipesbyEthnicity.ejs',{
+            recipeArray: recipeArray,
+            recipeEthnicity: req.params.ethnicity,
+            pageCount: Math.ceil(count/limitAmount),
+            currentPage: currentPage
+          });
+
+      }
+  );
+});
+});
+
+
+
+
+// Details of Recipe ========================
+
+router.get('/recipes/:ethnicity/:recipeId/:page?', (req, res, next) => {
+  const currentpage = req.params.page || 1;
+  const page = Number(req.params.page) - 1;
+  const skip = page * 5;
+  res.locals.bodyclass = "details-body";
+  res.locals.currentPage = Number(currentpage);
+  let isBookMarked = false;
+  RecipeModel
+    .findById(req.params.recipeId, {reviews: {$slice: [skip, 5]}})
+    .populate('author reviews.author')
+    .exec((err, recipeDetails) => {
       if (err) {
         next(err);
         return;
       }
 
-      res.locals.userTitle = `${userProfile.displayName}'s ${req.params.ethnicity} Recipes`;
-      res.render('recipe-views/recipesbyEthnicity.ejs',{
-        recipeArray: recipeArray,
-        recipeEthnicity: req.params.ethnicity
-      });
+      if (req.isAuthenticated()) {
+        isBookMarked = req.user.bookmarks.some((bookmark) => {
+          return bookmark.equals(recipeDetails._id);
+        });
+      }
 
-    }
-  );
+      res.render('recipe-views/recipe-details.ejs', {
+        recipeDetails: recipeDetails,
+        isBookMarked: isBookMarked
+      });
+    });
+
 
 });
 
 // Bookmarked Pages
 
-router.get('/profile/bookmarked/:userId/:ethnicity', (req, res, next) => {
+router.get('/profile/bookmarked/:userId/:ethnicity/:page?', (req, res, next) => {
+  let currentPage = Number(req.params.page) || 1;
+  const page = Number(req.params.page) - 1;
+  let limitAmount = 16;
   UserModel
     .findById(req.params.userId)
-    .populate('bookmarks', null, {ethnicity: req.params.ethnicity})
-    .exec(
-      (err, userInfo) => {
-        console.log(userInfo);
-        if (err) {
-          next(err);
-          return;
-        }
+    .populate({path: 'bookmarks', match: {'ethnicity': req.params.ethnicity}})
+    .exec(// Gets the amount of recipes in given ethnicity, to show pagination buttonss
+    (err, userInfo) => {
+      if(err) {
+        next(err);
+        return;
+      }
+      let count = userInfo.bookmarks.length;
+      console.log(count);
+      RecipeModel
+        .find({_id: userInfo.bookmarks, ethnicity: req.params.ethnicity})
+        .skip(page*limitAmount)
+        .limit(limitAmount)
+        .sort({ rating: -1  })
+        .exec(
+          (err, recipeArray) => {
+            if (err) {
+              next(err);
+              return;
+            }
+            res.locals.paginationLink = `/profile/bookmarked/${userInfo._id}/${req.params.ethnicity}/`;
+            res.locals.userTitle = `${userInfo.displayName}'s' ${req.params.ethnicity} Bookmarks`;
+            res.render('recipe-views/recipesbyEthnicity.ejs',{
+              recipeArray: recipeArray,
+              recipeEthnicity: req.params.ethnicity,
+              pageCount: Math.ceil(count/limitAmount),
+              currentPage: currentPage
+            });
+          }
+        );
+      });
 
-        res.locals.userTitle = `${userInfo.displayName}'s ${req.params.ethnicity} Bookmarks`;
-        res.render('recipe-views/recipesbyEthnicity.ejs',{
-          recipeArray: userInfo.bookmarks,
-          recipeEthnicity: req.params.ethnicity
-        });
-
-    }
-  );
 
 });
 

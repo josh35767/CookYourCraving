@@ -118,6 +118,8 @@
 
   <div class="review-list">
   <!--  ======Reviews SECTION========= -->
+
+<div class="container background-list details">
 <h2 id="ReviewSection"> Reviews for <i><%= recipeDetails.title %></i> </h2>
 
   <% if (isUserLogged) { %>
@@ -131,7 +133,7 @@
     <h4> Log in to write a review </h4>
 
   <% } %>
-
+</div>
 <% if(recipeDetails.reviews.length > 0) { %>
 
     <% recipeDetails.reviews.forEach((oneReview) => { %>
@@ -150,7 +152,6 @@
         <p> Review by: <%= oneReview.author.displayName%></p>
 
       </div>
-
     <% }) %>
 
 <% } else { %>
@@ -158,23 +159,27 @@
 <% } %>
 <div class='pagination-buttons'>
   <ul class="pagination">
+
     <% if (currentPage > 1) { %>
-    <li>
-      <a href="/recipes/<%= recipeDetails.ethnicity %>/<%= recipeDetails._id %>/<%= currentPage - 1 %>#ReviewSection" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-    </li>
+      <li>
+        <a href="/recipes/<%= recipeDetails.ethnicity %>/<%= recipeDetails._id %>/<%= currentPage - 1 %>#ReviewSection" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <% } %>
+
+      <li class='centerpag'>
+          <span aria-hidden="true">...</span>
+      </li>
+
+      <% if (recipeDetails.reviews.length === 5) { %>
+      <li>
+        <a href="/recipes/<%= recipeDetails.ethnicity %>/<%= recipeDetails._id %>/<%= currentPage + 1 %>#ReviewSection" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
     <% } %>
-    <li class='centerpag'>
-        <span aria-hidden="true">...</span>
-    </li>
-    <% if (recipeDetails.reviews.length === 5) { %>
-    <li>
-      <a href="/recipes/<%= recipeDetails.ethnicity %>/<%= recipeDetails._id %>/<%= currentPage + 1 %>#ReviewSection" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li>
-    <% } %>
+
   </ul>
 </div>
 

@@ -95,19 +95,47 @@ a:hover {
 // =============================== List Page
 
 .list-bg {
-  background-image: url('../images/foodpic.jpeg');
+  background: url('../images/foodpic.jpeg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
   background-size: cover;
-  background-position: center, center;
-  padding: 20px 0;
   text-align: center;
   hr {
     border-color: #7f7f7f;
   }
 }
 
+.all-cuisines {
+  max-width: 650px;
+  margin: 50px auto;
+
+}
+
+.all-cuisines-content {
+  padding: 0 20px;
+}
+
+
 .pagination-buttons {
+  text-align: center;
   display: block;
   margin: 0 auto;
+  li a {
+    background-color: #282828;
+    border-color: #282828;
+    color: white;
+  }
+  li a:hover {
+    background-color: #282828;
+    border-color: #282828;
+    color: white;
+  }
+  li a.active, li a.active:hover {
+    background-color: white;
+    color: #282828;
+    border-color: white;
+  }
 }
 
 .centerpag span:hover {
@@ -115,7 +143,7 @@ a:hover {
 }
 .list-column {
   text-align: center;
-  width: 70%;
+  width: 100%;
   margin: 0 auto;
 }
 
@@ -138,7 +166,7 @@ a:hover {
 }
 
 .search-box {
-  width: 50%;
+  width: 90%;
   display: inline-block;
   margin-bottom: 20px;
 }
@@ -347,14 +375,16 @@ a:hover {
 // ======================
 
 .foodsnippet {
+  display: block;
   padding: 10px 15px;
   border-radius: 2px;
   margin: 10px 6%;
+  overflow: auto;
   max-width: 400px;
   vertical-align: middle;
-  height: 450px;
   background-color: white;
   box-shadow: $shadow;
+  word-wrap: break-word;
   h3 {
     margin-top: 15px;
   }
@@ -371,6 +401,9 @@ a:hover {
   }
 }
 
+.grid-item {
+  width: 25%;
+}
 
 
 //==================== FORM for New Recipe
@@ -404,10 +437,6 @@ a:hover {
   }
 }
 
-.new-title {
-  background-color: red !important;
-}
-
 .recipe-new-body {
   background: url('../images/new-background.jpeg') no-repeat center center fixed;
   -webkit-background-size: cover;
@@ -424,6 +453,8 @@ a:hover {
 
 .validation-error {
   color: red;
+  display: inline-block;
+  font-weight: 400;
 }
 
 .display-name-body {
@@ -517,8 +548,9 @@ a:hover {
 }
 
 .details img {
-  width: 80%;
-  max-height: 350px;
+  width: 100%;
+  max-width: 450px;
+  max-height: 400px;
   border: 2px solid black;
   box-shadow: $shadow;
 }
@@ -569,7 +601,7 @@ span.stars span {
   background-color: #ffffff;
 background-image: url("../images/textured.png");
 }
-//===========
+//====== recipe by specific cuisine=====
 .recipe-list {
   margin: 20px auto;
   box-shadow: $shadow;
@@ -582,6 +614,8 @@ background-image: url("../images/textured.png");
 .recipe-list-main {
   background-color: transparent;
   box-shadow: none;
+  max-width: 1300px;
+  width: 100%;
 }
 
 .glyphicon-bookmark {
@@ -667,10 +701,22 @@ background-image: url("../images/textured.png");
   .review-info {
     width: 100%;
   }
+  .grid-item {
+    width: 100%;
+  }
 }
 
-@media (min-width: 1000px) and (max-width: 1200px) {
+@media (min-width: 700px) and (max-width: 900px) {
+  .grid-item {
+    width: 50%;
+  }
+}
+
+@media (min-width: 900px) and (max-width: 1200px) {
   .foodsnippet {
     margin: 10px 3%;
+  }
+  .grid-item {
+    width: 33%;
   }
 }

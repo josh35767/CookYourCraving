@@ -18,20 +18,19 @@ const recipeSchema = new Schema ({
   cookingTime: {
     hours: {type: Number},
     minutes: {type: Number,
+              required: [true, "Cooking Time required"],
               min: [0, "Minimum time of zero"],
               max: [59, "If greater than 59, please use the hour selector."]},
   },
   serves: {
     type: Number,
-    required: [true, "Field is required"]
+    required: [true, "Servings is required"]
   },
   ingredients: {
-    type: [String],
-    minlength: [1, "Ingredients are required"]
+    type: [String]
   },
   recipe: {
-    type: [String],
-    minlength: [1, "Directions are required"]
+    type: [String]
   },
   ethnicity: {
     type: String,

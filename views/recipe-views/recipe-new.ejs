@@ -4,44 +4,57 @@
   <hr>
   <form action="/recipes/new" method="post" class="form-horizontal" enctype="multipart/form-data">
     <div class="row">
-      <div class='new-title'>
+
+
         <div class="col-sm-8">
+
           <div class="form-group input-padding">
             <label for="title-input"> Title for Recipe: </label>
             <input type="text" class="form-control text-input" name="recipeTitle" id="title-input">
-
           </div>
+          <% if(typeof titleValidationError === 'object') { %>
+            <p class="validation-error"> *<%= titleValidationError.message %> </p>
+          <% } %>
+
         </div>
 
         <div class="col-sm-2">
+
           <div class="form-group input-padding">
             <label for="servings-input"> Serves: </label>
             <input type="number" class="form-control text-input" name="recipeServings" id="servings-input">
-
           </div>
+
+          <% if(typeof titleValidationError === 'object') { %>
+            <p class="validation-error"> *<%= servesValidationError.message %> </p>
+          <% } %>
         </div>
-    </div>
+
+
     </div>
     <hr>
 
 
-      <div>
+
         <div class="form-group input-padding time-input">
           <label for="prep-time-input"> Prep Time: </label><br>
           <input type="number" class="form-control text-input" name="recipePrepTimeHours" id="prep-time-input"> <p>Hours</p>
           <input type="number" class="form-control text-input" name="recipePrepTimeMinutes">  <p>Minutes</p>
         </div>
-      </div>
+        <% if(typeof prepTimeValidationError === 'object') { %>
+          <p class="validation-error"> *<%= prepTimeValidationError.message %> </p>
+        <% } %>
 
-      <div>
+
         <div class="form-group input-padding time-input">
           <label for="cooking-time-input"> Cooking Time: </label><br>
           <input type="number" class="form-control text-input" name="recipeCookingTimeHours" id="cooking-time-input"> <p>Hours</p>
           <input type="number" class="form-control text-input" name="recipeCookingTimeMinutes">  <p>Minutes</p>
         </div>
-      </div>
 
-
+        <% if(typeof cookingTimeValidationError === 'object') { %>
+          <p class="validation-error"> *<%= cookingTimeValidationError.message %> </p>
+        <% } %>
 
 
       <div class="form-group">
