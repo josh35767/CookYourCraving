@@ -25,7 +25,7 @@
             <input type="number" class="form-control text-input" name="recipeServings" id="servings-input">
           </div>
 
-          <% if(typeof titleValidationError === 'object') { %>
+          <% if(typeof servesValidationError === 'object') { %>
             <p class="validation-error"> *<%= servesValidationError.message %> </p>
           <% } %>
         </div>
