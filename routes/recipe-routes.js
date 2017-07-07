@@ -272,7 +272,7 @@ router.get('/recipes/:ethnicity/:recipeId/delete', (req, res, next) => {
           return;
         }
 
-        res.redirect('/recipes/'+recipeDetails.ethnicity);
+        res.redirect('/recipes/'+recipeDetails.ethnicity+'/results/');
       });
 
 
@@ -284,7 +284,7 @@ router.get('/recipes/:ethnicity/:recipeId/delete', (req, res, next) => {
 
 router.get('/profile/recipes/:userId/:ethnicity/:page?', (req, res, next) => {
   let userProfile;
-    
+
   UserModel.findById(
     req.params.userId,
     (err, userInfo) => {
