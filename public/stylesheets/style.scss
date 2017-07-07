@@ -36,12 +36,6 @@ a:hover {
   text-decoration: none;
 }
 
-.list-panel {
-  margin-bottom: 0;
-  padding: 5px 15px;
-  list-style: none;
-  font-size: 25px;
-}
 
 .front-jumbo {
   margin: 0;
@@ -105,11 +99,42 @@ a:hover {
   background-size: cover;
   background-position: center, center;
   padding: 20px 0;
+  text-align: center;
+  hr {
+    border-color: #7f7f7f;
+  }
 }
+
+.pagination-buttons {
+  display: block;
+  margin: 0 auto;
+}
+
+.centerpag span:hover {
+  background-color: white !important;
+}
+.list-column {
+  text-align: center;
+  width: 70%;
+  margin: 0 auto;
+}
+
+.list-panel {
+  margin-bottom: 10px;
+  padding: 5px 15px;
+  list-style: none;
+  font-size: 25px;
+}
+
+
 
 .search-btn {
   display: inline;
   width: 100px;
+}
+
+.search-label {
+  font-size: 1.2em;
 }
 
 .search-box {
@@ -119,7 +144,7 @@ a:hover {
 }
 
 .background-list {
-  background-color: rgba(238, 238, 238, 0.9);
+    background-color: rgba(238, 238, 238, 0.9);
   border-radius: 3px;
   h2 {
     color: #282828;
@@ -408,11 +433,6 @@ a:hover {
   background-position: center center;
 }
 
-.ingredients-list li{
-  // display: inline-block;
-  // width: 45%;
-  list-style:circle;
-}
 
 .time-input {
   .form-control {
@@ -577,6 +597,7 @@ background-image: url("../images/textured.png");
 }
 
 .review-list {
+  text-align: center;
   h2 {
     text-decoration: underline;
   }
@@ -586,12 +607,17 @@ background-image: url("../images/textured.png");
   }
 }
 
+.rating-stars {
+  text-align: left;
+}
+
 .review-info {
   display: block;
   padding: 5px 10px;
-  margin: 20px 10px;
+  margin: 20px auto;
   border-radius: 3px;
-  width: 60%;
+  max-width: 550px;
+  width: 100%;
   background-color: white;
   h4 {
     font-size: 1.2em;

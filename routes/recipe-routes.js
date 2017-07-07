@@ -126,12 +126,15 @@ router.get('/recipes/:ethnicity', (req, res, next) => {
 
 // Details of Recipe ========================
 
-router.get('/recipes/:ethnicity/:recipeId', (req, res, next) => {
+router.get('/recipes/:ethnicity/:recipeId/:page?', (req, res, next) => {
+  const currentpage = req.params.page || 1;
   const page = Number(req.params.page) - 1;
+  const skip = page * 5;
   res.locals.bodyclass = "details-body";
+  res.locals.currentPage = Number(currentpage);
   let isBookMarked = false;
   RecipeModel
-    .findById(req.params.recipeId)
+    .findById(req.params.recipeId, {reviews: {$slice: [skip, 5]}})
     .populate('author reviews.author')
     .exec((err, recipeDetails) => {
       if (err) {

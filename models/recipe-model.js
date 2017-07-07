@@ -35,7 +35,7 @@ const recipeSchema = new Schema ({
   },
   ethnicity: {
     type: String,
-    enum: ["Cajun", "Chinese", "French", "Greek", "Indian", "Italian", "Japanese", "Thai", "Korean", "American", "Spanish", "Mexican", "Latin-American", "English", "German"]
+    enum: ["Cajun", "Chinese", "French", "Greek", "Indian", "Italian", "Japanese", "Thai", "Korean", "American", "Spanish", "Mexican", "Latin-American", "English", "German", "Vietnamese"]
   },
   rating: {type: Number, default: 4},
   author: { type: Schema.Types.ObjectId, ref: 'User'},

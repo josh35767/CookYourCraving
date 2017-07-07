@@ -12,9 +12,11 @@
 
           <div class='col-sm-6 col-md-4'>
             <div class='columnspacing foodsnippet'>
+
               <img src="<%= oneRecipe.photoURL %>" class='recipeImage'></img>
               <h3> <%= oneRecipe.title %> </h3>
               <hr>
+              
               <h4> Date Created: <%= oneRecipe.createdAt.toDateString() %> </h4>
               <h4> Rating: <span class="stars"><%= (oneRecipe.rating.toFixed(1)); %> </span></h4>
               <h4> Ethnicity: <%= oneRecipe.ethnicity %> </h4>

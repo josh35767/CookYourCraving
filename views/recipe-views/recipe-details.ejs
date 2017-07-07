@@ -69,7 +69,7 @@
           <p> <b>Rating:</b> <span class="stars"><%= (recipeDetails.rating.toFixed(1)); %> </span> </p>
 
 
-          <img src="<%= recipeDetails.photoURL %>">
+          <img src="<%= recipeDetails.photoURL %>" onError="this.src = '/images/default-recipe.png'">
 
           <% if(recipeDetails.author._id.equals(user._id)) { %>
 
@@ -91,7 +91,7 @@
         </div>
 
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6 directions">
 
       <div class="col-content">
         <h2> Directions </h2><br>
@@ -116,9 +116,9 @@
   </div>
 </div>
 
-  <div class="container background-list review-list">
+  <div class="review-list">
   <!--  ======Reviews SECTION========= -->
-<h2> Reviews </h2>
+<h2 id="ReviewSection"> Reviews for <i><%= recipeDetails.title %></i> </h2>
 
   <% if (isUserLogged) { %>
 
@@ -137,7 +137,7 @@
     <% recipeDetails.reviews.forEach((oneReview) => { %>
 
       <div class='review-info'>
-        <h4> <b>Rating:</b> <%= oneReview.rating %> </h4>
+        <h4> <b>Rating:</b> <span class="stars rating-stars">   <%= oneReview.rating %> </span> </h4>
 
         <hr>
 
@@ -156,14 +156,28 @@
 <% } else { %>
   <h3> Currently no reviews for this recipe. Why not write one yourself? </h3>
 <% } %>
+<div class='pagination-buttons'>
+  <ul class="pagination">
+    <% if (currentPage > 1) { %>
+    <li>
+      <a href="/recipes/<%= recipeDetails.ethnicity %>/<%= recipeDetails._id %>/<%= currentPage - 1 %>#ReviewSection" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <% } %>
+    <li class='centerpag'>
+        <span aria-hidden="true">...</span>
+    </li>
+    <% if (recipeDetails.reviews.length === 5) { %>
+    <li>
+      <a href="/recipes/<%= recipeDetails.ethnicity %>/<%= recipeDetails._id %>/<%= currentPage + 1 %>#ReviewSection" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+    <% } %>
+  </ul>
+</div>
 
-<ul class="pagination">
-  <li><a href="#">1</a></li>
-  <li><a href="#">2</a></li>
-  <li><a href="#">3</a></li>
-  <li><a href="#">4</a></li>
-  <li><a href="#">5</a></li>
-</ul>
 </div>
 
 
